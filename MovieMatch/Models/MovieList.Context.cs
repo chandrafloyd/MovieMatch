@@ -25,7 +25,10 @@ namespace MovieMatch.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<MovieList> MovieLists { get; set; }
         public virtual DbSet<SearchTerm> SearchTerms { get; set; }
+        public virtual DbSet<MovieMood> MovieMoods { get; set; }
+        public virtual DbSet<MovieList> MovieLists { get; set; }
     }
+
+   
 }

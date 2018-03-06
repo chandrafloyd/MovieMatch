@@ -6,22 +6,17 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
-
-namespace MovieMatch.Models
+public class MovieList
 {
-    using System;
-    using System.Collections.Generic;
+    public string title { get; set; }
+    public string with_genres { get; set; }
+    public string with_keywords { get; set; }
+    public string with_people { get; set; }
+    public int primary_release_year { get; set; }
+    public int runtime { get; set; }
+    public string language { get; set; }
+    public string watched { get; set; }
 
-    public partial class MovieList
-    {
-        public string title { get; set; }
-        public string with_genres { get; set; }
-        public string with_keywords { get; set; }
-        public string with_people { get; set; }
-        public int  primary_release_year { get; set; }
-        public int runtime { get; set; }
-        public string language { get; set; }
-        public string watched { get; set; }
-    }
+
+
 }

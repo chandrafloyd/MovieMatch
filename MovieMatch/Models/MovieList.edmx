@@ -18,6 +18,15 @@
           <Property Name="language" Type="nvarchar" MaxLength="50" />
           <Property Name="watched" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="MovieMood">
+          <Key>
+            <PropertyRef Name="MovieTittle" />
+          </Key>
+          <Property Name="MovieTittle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RunTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mood" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="SearchTerms">
           <Key>
             <PropertyRef Name="title" />
@@ -32,6 +41,7 @@
         </EntityType>
         <EntityContainer Name="moviematchModelStoreContainer">
           <EntitySet Name="MovieList" EntityType="Self.MovieList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MovieMood" EntityType="Self.MovieMood" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SearchTerms" EntityType="Self.SearchTerms" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -39,9 +49,31 @@
     <edmx:ConceptualModels>
       <Schema Namespace="moviematchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="MovieLists" EntityType="moviematchModel.MovieList" />
           <EntitySet Name="SearchTerms" EntityType="moviematchModel.SearchTerm" />
+          <EntitySet Name="MovieMoods" EntityType="moviematchModel.MovieMood" />
+          <EntitySet Name="MovieLists" EntityType="moviematchModel.MovieList" />
         </EntityContainer>
+        <EntityType Name="SearchTerm">
+          <Key>
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="with_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="with_keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="with_people" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="primary_release_year" Type="Int32" />
+          <Property Name="runtime" Type="Int32" />
+          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MovieMood">
+          <Key>
+            <PropertyRef Name="MovieTittle" />
+          </Key>
+          <Property Name="MovieTittle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RunTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mood" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="MovieList">
           <Key>
             <PropertyRef Name="title" />
@@ -55,28 +87,15 @@
           <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="watched" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="SearchTerm">
-          <Key>
-            <PropertyRef Name="title" />
-          </Key>
-          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_people" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="primary_release_year" Type="Int32" />
-          <Property Name="runtime" Type="Int32" />
-          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="moviematchModelStoreContainer" CdmEntityContainer="Entities" >
-          <EntitySetMapping Name="MovieLists">
-            <EntityTypeMapping TypeName="moviematchModel.MovieList">
-              <MappingFragment StoreEntitySet="MovieList">
-                <ScalarProperty Name="watched" ColumnName="watched" />
+          <EntitySetMapping Name="SearchTerms">
+            <EntityTypeMapping TypeName="moviematchModel.SearchTerm">
+              <MappingFragment StoreEntitySet="SearchTerms">
                 <ScalarProperty Name="language" ColumnName="language" />
                 <ScalarProperty Name="runtime" ColumnName="runtime" />
                 <ScalarProperty Name="primary_release_year" ColumnName="primary_release_year" />
@@ -87,9 +106,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SearchTerms">
-            <EntityTypeMapping TypeName="moviematchModel.SearchTerm">
-              <MappingFragment StoreEntitySet="SearchTerms">
+          <EntitySetMapping Name="MovieMoods">
+            <EntityTypeMapping TypeName="moviematchModel.MovieMood">
+              <MappingFragment StoreEntitySet="MovieMood">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Mood" ColumnName="Mood" />
+                <ScalarProperty Name="RunTime" ColumnName="RunTime" />
+                <ScalarProperty Name="MovieTittle" ColumnName="MovieTittle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieLists">
+            <EntityTypeMapping TypeName="moviematchModel.MovieList">
+              <MappingFragment StoreEntitySet="MovieList">
+                <ScalarProperty Name="watched" ColumnName="watched" />
                 <ScalarProperty Name="language" ColumnName="language" />
                 <ScalarProperty Name="runtime" ColumnName="runtime" />
                 <ScalarProperty Name="primary_release_year" ColumnName="primary_release_year" />

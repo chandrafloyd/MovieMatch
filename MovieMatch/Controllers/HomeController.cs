@@ -27,5 +27,17 @@ namespace MovieMatch.Controllers
 
             return View();
         }
+
+        public ActionResult MovieByMood(string Mood)
+        {
+            
+            Entities moviematchORM = new Entities();
+
+            ViewBag.Movie =
+                moviematchORM.MovieMoods.Where(x => x.Mood == Mood).ToList();
+
+            return View("Contact");
+
+        }
     }
 }

@@ -227,6 +227,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MovieList.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MovieMood.cs">
+      <DependentUpon>MovieList.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SearchTerm.cs">
       <DependentUpon>MovieList.tt</DependentUpon>
     </Compile>
