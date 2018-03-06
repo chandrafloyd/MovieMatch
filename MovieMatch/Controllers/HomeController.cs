@@ -30,14 +30,20 @@ namespace MovieMatch.Controllers
 
         public ActionResult MovieByMood(string Mood)
         {
-            
+
             Entities moviematchORM = new Entities();
 
-            ViewBag.Movie =
-                moviematchORM.MovieMoods.Where(x => x.Mood == Mood).ToList();
+            ViewBag.MovieList = moviematchORM.MovieMoods.Where(x => x.Mood == Mood).ToList();
 
             return View("Contact");
 
+        }
+
+        public ActionResult ShowMovies()
+        {
+
+
+            return View("SearchResults");
         }
     }
 }

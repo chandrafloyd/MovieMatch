@@ -1,0 +1,21 @@
+﻿
+<table class"table">
+    <tr>
+        <th>Title</th>
+        <th>Runtime</th>
+        <th>Genre</th>
+       <th>Image</th>
+    </tr>
+
+    @foreach (var M in ViewBag.MovieList)
+    {
+        <tr>
+            <td>@M.title</td>
+            <td>@M.runtime</td>
+            <td>@M.with_genres</td>            
+            <td>DISPLAY IMAGE HERE</td>
+
+        </tr>
+    }
+
+</table>

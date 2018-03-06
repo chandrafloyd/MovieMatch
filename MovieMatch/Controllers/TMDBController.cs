@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
+using MovieMatch.Models;
 
 namespace MovieMatch.Controllers
 {
@@ -22,7 +23,7 @@ namespace MovieMatch.Controllers
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
             //http request
-            HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/550?api_key="+ TMDBkey);
+            HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/550?api_key=" + TMDBkey);
 
             //browser request
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
@@ -92,7 +93,7 @@ namespace MovieMatch.Controllers
 
                 ViewBag.SearchMessage = $"The title is: {Title}";
 
-                return View("SearchMovies");
+                return View("SearchResults");
             }
 
             else // if something is wrong (recieved a 404 or 500 error) go to this page and show the error
@@ -100,5 +101,18 @@ namespace MovieMatch.Controllers
                 return View("../Shared/Error");
             }
         }
+
+
+
+        public ActionResult GetMoviesByUser(string Email)
+        {
+            Entities EOrm = new Entities();
+
+            ViewBag.MovieList = EOrm.MovieLists.Where(x => x.Email.Contains(Email)).ToList();
+
+            return View("MovieListResults");
+        }
+
+
     }
 }

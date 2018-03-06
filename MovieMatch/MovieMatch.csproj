@@ -210,6 +210,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>MovieList.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MovieList.Context.cs">
@@ -359,6 +362,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\TMDB\SearchMovies.cshtml" />
+    <Content Include="Views\TMDB\SearchResults.cshtml" />
+    <Content Include="Views\TMDB\MovieListResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

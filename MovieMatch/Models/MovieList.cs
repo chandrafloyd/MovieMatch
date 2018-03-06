@@ -6,6 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
 public class MovieList
 {
     public string title { get; set; }
@@ -16,7 +17,7 @@ public class MovieList
     public int runtime { get; set; }
     public string language { get; set; }
     public string watched { get; set; }
-
+    public string Email { get; set; }
 
 
 }
