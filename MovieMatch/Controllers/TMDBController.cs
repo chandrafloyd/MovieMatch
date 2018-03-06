@@ -88,9 +88,10 @@ namespace MovieMatch.Controllers
                 JObject MovieParse = JObject.Parse(output);
 
                 //locate the data we want to see. check node tree in jsonviewer
-                ViewBag.RawTitle = MovieParse["original_title"];
+                ViewBag.RawResults = MovieParse["results"];
+                //ViewBag.RawPlot = MovieParse["results"]["overview"].ToList();
 
-                return View();
+                return View("SearchResults");
             }
 
             else // if something is wrong (recieved a 404 or 500 error) go to this page and show the error

@@ -1,6 +1,20 @@
-﻿
-<h1>Hello</h1>
+﻿<h1>Search Results</h1>
 
-<form action="/TMDB/GetUserMovies" method="get">    
-    <input type="submit" value="See My Movies" />
-</form>
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Poster</th>
+        <th>Plot</th>
+        <th>Add to My List</th>
+    </tr>
+    @foreach (var r in ViewBag.RawResults)
+    {
+        {
+            <tr>
+                <td>@r["original_title"]</td>
+                <td><img src="@r["poster_path"]" /></td>
+                <td>@r["overview"]</td>
+            </tr>
+        }
+    }
+</table>
