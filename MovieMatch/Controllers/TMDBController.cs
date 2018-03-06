@@ -58,12 +58,13 @@ namespace MovieMatch.Controllers
 
         }
 
-        public ActionResult GetMoviesBySearch(string MovieTitle)
+        public ActionResult GetMoviesBySearch(string genre)
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
+
             //http request
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-                "&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&with_keywords=" + MovieTitle);
+                "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + genre);
             //https://api.themoviedb.org/3/discover/movie?api_key=b4b0128c67aa31fa68e47bb1b58a61d5&certification_country=US&certification.lte=G&sort_by=popularity.desc
 
 
