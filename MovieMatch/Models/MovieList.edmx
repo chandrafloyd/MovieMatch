@@ -5,24 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="moviematchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Email" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" />
-          <Property Name="TwoFactorEnabled" Type="bit" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" />
-          <Property Name="AccessFailedCount" Type="int" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="ZipCode" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="MovieList">
           <Key>
             <PropertyRef Name="title" />
@@ -35,7 +17,7 @@
           <Property Name="runtime" Type="int" />
           <Property Name="language" Type="nvarchar" MaxLength="50" />
           <Property Name="watched" Type="nchar" MaxLength="10" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
@@ -48,64 +30,29 @@
         </EntityType>
         <EntityType Name="SearchTerms">
           <Key>
-            <PropertyRef Name="title" />
+            <PropertyRef Name="searchnumber" />
           </Key>
-          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="searchnumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
           <Property Name="with_genres" Type="nvarchar" MaxLength="50" />
-          <Property Name="with_keywords" Type="nvarchar" MaxLength="50" />
-          <Property Name="with_people" Type="nvarchar" MaxLength="50" />
           <Property Name="primary_release_year" Type="int" />
           <Property Name="runtime" Type="int" />
           <Property Name="language" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_MovieList_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="MovieList" Type="Self.MovieList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Email" />
-            </Principal>
-            <Dependent Role="MovieList">
-              <PropertyRef Name="Email" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="moviematchModelStoreContainer">
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MovieList" EntityType="Self.MovieList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MovieMood" EntityType="Self.MovieMood" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SearchTerms" EntityType="Self.SearchTerms" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_MovieList_AspNetUsers" Association="Self.FK_MovieList_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="MovieList" EntitySet="MovieList" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="moviematchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="SearchTerms" EntityType="moviematchModel.SearchTerm" />
           <EntitySet Name="MovieMoods" EntityType="moviematchModel.MovieMood" />
           <EntitySet Name="MovieLists" EntityType="moviematchModel.MovieList" />
-          <EntitySet Name="AspNetUsers" EntityType="moviematchModel.AspNetUser" />
-          <AssociationSet Name="FK_MovieList_AspNetUsers" Association="moviematchModel.FK_MovieList_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="MovieList" EntitySet="MovieLists" />
-          </AssociationSet>
+          <EntitySet Name="SearchTerms" EntityType="moviematchModel.SearchTerm" />
         </EntityContainer>
-        <EntityType Name="SearchTerm">
-          <Key>
-            <PropertyRef Name="title" />
-          </Key>
-          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_people" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="primary_release_year" Type="Int32" />
-          <Property Name="runtime" Type="Int32" />
-          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="MovieMood">
           <Key>
             <PropertyRef Name="MovieTittle" />
@@ -127,59 +74,25 @@
           <Property Name="runtime" Type="Int32" />
           <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="watched" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="moviematchModel.FK_MovieList_AspNetUsers" FromRole="MovieList" ToRole="AspNetUser" />
-        </EntityType>
-        <EntityType Name="AspNetUser">
-          <Key>
-            <PropertyRef Name="Email" />
-          </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" />
-          <Property Name="AccessFailedCount" Type="Int32" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="ZipCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MovieLists" Relationship="moviematchModel.FK_MovieList_AspNetUsers" FromRole="AspNetUser" ToRole="MovieList" />
         </EntityType>
-        <Association Name="FK_MovieList_AspNetUsers">
-          <End Type="moviematchModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="moviematchModel.MovieList" Role="MovieList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Email" />
-            </Principal>
-            <Dependent Role="MovieList">
-              <PropertyRef Name="Email" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="SearchTerm">
+          <Key>
+            <PropertyRef Name="searchnumber" />
+          </Key>
+          <Property Name="searchnumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="with_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="primary_release_year" Type="Int32" />
+          <Property Name="runtime" Type="Int32" />
+          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="moviematchModelStoreContainer" CdmEntityContainer="Entities" >
-          <EntitySetMapping Name="SearchTerms">
-            <EntityTypeMapping TypeName="moviematchModel.SearchTerm">
-              <MappingFragment StoreEntitySet="SearchTerms">
-                <ScalarProperty Name="language" ColumnName="language" />
-                <ScalarProperty Name="runtime" ColumnName="runtime" />
-                <ScalarProperty Name="primary_release_year" ColumnName="primary_release_year" />
-                <ScalarProperty Name="with_people" ColumnName="with_people" />
-                <ScalarProperty Name="with_keywords" ColumnName="with_keywords" />
-                <ScalarProperty Name="with_genres" ColumnName="with_genres" />
-                <ScalarProperty Name="title" ColumnName="title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MovieMoods">
             <EntityTypeMapping TypeName="moviematchModel.MovieMood">
               <MappingFragment StoreEntitySet="MovieMood">
@@ -193,7 +106,7 @@
           <EntitySetMapping Name="MovieLists">
             <EntityTypeMapping TypeName="moviematchModel.MovieList">
               <MappingFragment StoreEntitySet="MovieList">
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="watched" ColumnName="watched" />
                 <ScalarProperty Name="language" ColumnName="language" />
                 <ScalarProperty Name="runtime" ColumnName="runtime" />
@@ -205,22 +118,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="moviematchModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+          <EntitySetMapping Name="SearchTerms">
+            <EntityTypeMapping TypeName="moviematchModel.SearchTerm">
+              <MappingFragment StoreEntitySet="SearchTerms">
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="runtime" ColumnName="runtime" />
+                <ScalarProperty Name="primary_release_year" ColumnName="primary_release_year" />
+                <ScalarProperty Name="with_genres" ColumnName="with_genres" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="searchnumber" ColumnName="searchnumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

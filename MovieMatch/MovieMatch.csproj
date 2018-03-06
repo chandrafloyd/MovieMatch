@@ -193,6 +193,7 @@
     <Compile Include="Controllers\AzureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StoredSearchController.cs" />
     <Compile Include="Controllers\TMDBController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -211,9 +212,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>MovieList.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MovieList.Context.cs">
@@ -241,10 +239,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -263,8 +259,6 @@
       <DependentUpon>MovieList.edmx</DependentUpon>
       <LastGenOutput>MovieList.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -275,16 +269,6 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <EntityDeploy Include="Models\MovieList.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MovieList.Designer.cs</LastGenOutput>
@@ -292,6 +276,11 @@
     <Content Include="Models\MovieList.edmx.diagram">
       <DependentUpon>MovieList.edmx</DependentUpon>
     </Content>
+    <Content Include="gitignore" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\index.d.ts" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -365,10 +354,12 @@
     <Content Include="Views\TMDB\SearchMovies.cshtml" />
     <Content Include="Views\TMDB\SearchResults.cshtml" />
     <Content Include="Views\TMDB\MovieListResults.cshtml" />
+    <Content Include="Views\gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Azure\" />
+    <Folder Include="Views\StoredSearch\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

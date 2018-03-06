@@ -22,51 +22,17 @@ namespace MovieMatch.Controllers
 
         public ActionResult SearchMovies()
         {
-            var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
-            //http request
-            HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/550?api_key=" + TMDBkey);
-
-            //browser request
-            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-
-
-            //request.Headers  (if needed, can request it. depends on the api documentation)
-
-            //http response
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            //if we receive a response
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                //open streamreader and read output
-                StreamReader rd = new StreamReader(response.GetResponseStream());
-                string output = rd.ReadToEnd();
-
-                //parse data and store in object
-                JObject MovieParse = JObject.Parse(output);
-
-                //locate the data we want to see. check node tree in jsonviewer
-                var Title = MovieParse["original_title"];
-
-                ViewBag.Message = $"The title is: {Title}";
-
                 return View();
-            }
-
-            else // if something is wrong (recieved a 404 or 500 error) go to this page and show the error
-            {
-                return View("../Shared/Error");
-            }
         }
 
-        public ActionResult GetMoviesBySearch(string genre, string year, string runtime)
+        public ActionResult GetMoviesBySearch()
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
             //http request
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + genre + 
-            "&year=" + year + "&with_runtime.lte=" + runtime);
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + TempData["genre"] + 
+            "&year=" + TempData["year"] + "&with_runtime.lte=" + TempData["time"]);
 
             //browser request
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";

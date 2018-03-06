@@ -1,9 +1,11 @@
-﻿<h1>Search Movies</h1>
+﻿@using Microsoft.AspNet.Identity;
+<h1>Search Movies</h1>
 <h2>Please select your search critera:</h2>
 
-<form action="/TMDB/GetMoviesBySearch" method="get">
+@model MovieMatch.Models.SearchTerm
+<form action="/StoredSearch/SaveSearchResult/" method="get">
     Please choose a genre:<br />
-    <select name="genre">
+    <select name="with_genres">
         <option value="28">Action</option>
         <option value="12">Adventure</option>
         <option value="16">Animation</option>
@@ -25,7 +27,8 @@
         <option value="37">Western</option>
     </select><br />
     <input type="text" name="runtime" placeholder="Max Run Time (minutes)" /><br />
-    <input type="text" name="year" placeholder="Release Year" /><br />
+    <input type="text" name="primary_release_year" placeholder="Release Year" /><br />
+    <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
     <input type="submit" value="Search" />
 </form>
 

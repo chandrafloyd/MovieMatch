@@ -12,13 +12,12 @@ namespace MovieMatch.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SearchTerm
+    public partial class sysdiagram
     {
-        public int searchnumber { get; set; }
-        public string Id { get; set; }
-        public string with_genres { get; set; }
-        public Nullable<int> primary_release_year { get; set; }
-        public Nullable<int> runtime { get; set; }
-        public string language { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

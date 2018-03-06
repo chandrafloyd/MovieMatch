@@ -12,13 +12,11 @@ namespace MovieMatch.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SearchTerm
+    public partial class AspNetUserClaim
     {
-        public int searchnumber { get; set; }
-        public string Id { get; set; }
-        public string with_genres { get; set; }
-        public Nullable<int> primary_release_year { get; set; }
-        public Nullable<int> runtime { get; set; }
-        public string language { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
     }
 }

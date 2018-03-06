@@ -18,6 +18,7 @@ public class MovieList
     public string language { get; set; }
     public string watched { get; set; }
     public string Email { get; set; }
+    public string Id { get; set; }
 
 
 }
