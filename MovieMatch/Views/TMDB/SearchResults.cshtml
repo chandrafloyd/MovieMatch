@@ -7,14 +7,17 @@
         <th>Plot</th>
         <th>Add to My List</th>
     </tr>
+
+
     @foreach (var r in ViewBag.RawResults)
     {
         {
-            <tr>
-                <td>@r["original_title"]</td>
-                <td><img src="@r["poster_path"]" /></td>
-                <td>@r["overview"]</td>
-            </tr>
+    <tr>
+        <td>@r["original_title"]</td>
+        <td><img src="@r["poster_path"]" /></td>
+        <td>@r["overview"]</td>
+        <td><a href="/Azure/SaveToMovieList?title=@r["original_title"]">Add to My List</a></td>
+    </tr>
         }
     }
 </table>

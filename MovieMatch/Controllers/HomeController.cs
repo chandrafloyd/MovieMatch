@@ -45,5 +45,7 @@ namespace MovieMatch.Controllers
 
             return View("SearchResults");
         }
+
+       
     }
 }

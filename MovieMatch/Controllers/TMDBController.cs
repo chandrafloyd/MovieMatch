@@ -91,6 +91,7 @@ namespace MovieMatch.Controllers
                 ViewBag.RawResults = MovieParse["results"];
                 //ViewBag.RawPlot = MovieParse["results"]["overview"].ToList();
 
+            
                 return View("SearchResults");
             }
 
@@ -113,4 +114,7 @@ namespace MovieMatch.Controllers
 
 
     }
+
+
+
 }
