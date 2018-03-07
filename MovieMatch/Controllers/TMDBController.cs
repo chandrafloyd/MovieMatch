@@ -29,10 +29,13 @@ namespace MovieMatch.Controllers
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
+            //keeps our temp data from the view
+            TempData.Keep();
+
             //http request
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + TempData["genre"] + 
-            "&year=" + TempData["year"] + "&with_runtime.lte=" + TempData["time"]);
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + TempData["genre"] +
+            "&primary_release_year=" + TempData["year"] + "&with_runtime.lte=" + TempData["time"]);
 
             //browser request
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
@@ -55,7 +58,6 @@ namespace MovieMatch.Controllers
 
                 //locate the data we want to see. check node tree in jsonviewer
                 ViewBag.RawResults = MovieParse["results"];
-                //ViewBag.RawPlot = MovieParse["results"]["overview"].ToList();
 
             
                 return View("SearchResults");

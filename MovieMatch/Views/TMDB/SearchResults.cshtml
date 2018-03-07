@@ -7,7 +7,8 @@
 
     <tr>
         <th>Title</th>
-        <th>Poster</th>
+        <th></th>
+        <th>Released</th>
         <th>Plot</th>
         <th>Add to My List</th>
     </tr>
@@ -19,8 +20,9 @@
             <tr>
                 <td>@r["original_title"]</td>
                 <td><img src="https://image.tmdb.org/t/p/w500/@r["poster_path"]" height="165" width="110" /></td>
+                <td>@r["release_date"]</td>
                 <td>@r["overview"]</td>
-                <td><a href="/Azure/AddToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&Id=@User.Identity.GetUserId()">Add to My List</a></td>
+                <td><a href="/Azure/AddToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&Id=@User.Identity.GetUserId()">Add to My List</a></td>
             </tr>
         }
     }

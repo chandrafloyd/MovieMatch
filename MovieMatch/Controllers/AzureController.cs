@@ -11,11 +11,13 @@ namespace MovieMatch.Controllers
     public class AzureController : Controller
     {
         // GET: Azure
-        public ActionResult GetMoviesByUser(string Email)
+        public ActionResult GetMoviesByUser(string Id)
         {
-            Entities EOrm = new Entities();
-            ViewBag.MovieList = EOrm.MovieLists.Where(x => x.Email.Contains(Email)).ToList();
-            return View("MovieListResults");
+            Entities MyMovieList = new Entities();
+
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == Id).ToList();
+
+            return View();
         }
 
 

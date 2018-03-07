@@ -30,8 +30,6 @@ namespace MovieMatch.Controllers
 
         public ActionResult ShowMovies()
         {
-
-
             return View("SearchResults");
         }
 

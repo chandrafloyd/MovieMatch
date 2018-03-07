@@ -353,7 +353,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\TMDB\SearchMovies.cshtml" />
     <Content Include="Views\TMDB\SearchResults.cshtml" />
-    <Content Include="Views\TMDB\MovieListResults.cshtml" />
+    <Content Include="Views\Azure\GetMoviesByUser.cshtml" />
     <Content Include="Views\gitignore" />
     <Content Include="Views\Azure\MovieByMood.cshtml" />
   </ItemGroup>
