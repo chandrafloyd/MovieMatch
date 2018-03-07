@@ -21,14 +21,15 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li><a href="/TMDB/SearchMovies">Search Movies</a></li>
-                    <li><a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">My Movie List</a></li>
-                    <li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
-                </ul>
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Home", "Index", "Home")</li>
+					<li>@Html.ActionLink("About", "About", "Home")</li>
+					<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+					<li><a href="/TMDB/SearchMovies">Search Movies</a></li>
+					<li><a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">My Movie List</a></li>
+					<li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
+					<li>@Html.ActionLink("Recomendation", "Recomendation", "Home")</li>
+				</ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

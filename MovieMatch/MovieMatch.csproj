@@ -356,7 +356,11 @@
     <Content Include="Views\Azure\GetMoviesByUser.cshtml" />
     <Content Include="Views\gitignore" />
     <Content Include="Views\Azure\MovieByMood.cshtml" />
+
     <Content Include="Views\Azure\UpdateMovie.cshtml" />
+
+    <Content Include="Views\Home\Recomendation.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
