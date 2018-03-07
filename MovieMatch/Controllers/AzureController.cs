@@ -37,8 +37,8 @@ namespace MovieMatch.Controllers
             AddMovie.MovieLists.Add(newMovie);
             AddMovie.SaveChanges();
 
-            //3. Go to customer view (but first need to load customer data(??))
-            return View("SearchResults");
+            //3. stay on search results view
+            return RedirectToAction("GetMoviesBySearch", "TMDB");
         }
 
 

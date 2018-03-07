@@ -18,6 +18,8 @@
           <Property Name="language" Type="nvarchar" MaxLength="50" />
           <Property Name="watched" Type="nchar" MaxLength="10" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="poster_path" Type="nvarchar" MaxLength="128" />
+          <Property Name="overview" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
@@ -75,6 +77,8 @@
           <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="watched" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="poster_path" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="overview" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SearchTerm">
           <Key>
@@ -106,6 +110,8 @@
           <EntitySetMapping Name="MovieLists">
             <EntityTypeMapping TypeName="moviematchModel.MovieList">
               <MappingFragment StoreEntitySet="MovieList">
+                <ScalarProperty Name="overview" ColumnName="overview" />
+                <ScalarProperty Name="poster_path" ColumnName="poster_path" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="watched" ColumnName="watched" />
                 <ScalarProperty Name="language" ColumnName="language" />

@@ -19,6 +19,8 @@ public class MovieList
     public string watched { get; set; }
     public string Email { get; set; }
     public string Id { get; set; }
+    public string overview { get; set; }
+    public string poster_path { get; set; }
 
 
 }
