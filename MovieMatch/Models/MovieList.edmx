@@ -29,6 +29,7 @@
           <Property Name="RunTime" Type="nvarchar" MaxLength="50" />
           <Property Name="Mood" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Poster" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="SearchTerms">
           <Key>
@@ -63,6 +64,7 @@
           <Property Name="RunTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mood" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Poster" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MovieList">
           <Key>
@@ -100,6 +102,7 @@
           <EntitySetMapping Name="MovieMoods">
             <EntityTypeMapping TypeName="moviematchModel.MovieMood">
               <MappingFragment StoreEntitySet="MovieMood">
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Mood" ColumnName="Mood" />
                 <ScalarProperty Name="RunTime" ColumnName="RunTime" />

@@ -18,5 +18,6 @@ namespace MovieMatch.Models
         public string RunTime { get; set; }
         public string Mood { get; set; }
         public string Description { get; set; }
+        public string Poster { get; set; }
     }
 }
