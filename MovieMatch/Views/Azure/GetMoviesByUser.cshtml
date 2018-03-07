@@ -1,4 +1,5 @@
 ﻿
+@using Microsoft.AspNet.Identity
 <table class"table">
     <tr>
         <th>Title</th>
@@ -9,11 +10,12 @@
 
     @foreach (var m in ViewBag.MovieList)
     {
-        <tr>
-            <td>@m.title</td>
-            <td>@m.runtime</td>
-            <td>@m.with_genres</td>            
-        </tr>
+    <tr>
+        <td>@m.title</td>
+        <td>@m.runtime</td>
+        <td>@m.with_genres</td>
+        <td><a href="/Azure/DeleteFromMovieList?title=@m.title">Delete from My List</a></td>
+        <td><a href="/Azure/UpdateMovie?title=@m.title">Rate Movie</a></td>
+    </tr>
     }
-
 </table>

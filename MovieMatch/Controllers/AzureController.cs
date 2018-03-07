@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MovieMatch.Models;
+using Microsoft.AspNet.Identity;
 
 
 namespace MovieMatch.Controllers
@@ -54,6 +55,33 @@ namespace MovieMatch.Controllers
 
             return View("MovieByMood");
 
+        }
+
+        public ActionResult DeleteFromMovieList(string title)
+        {
+            //1. ORM 
+            Entities DeleteMovie = new Entities();
+
+            //2. find movie by title, then delete
+            DeleteMovie.MovieLists.Remove(DeleteMovie.MovieLists.Find(title));
+
+            //3. Save changes
+            DeleteMovie.SaveChanges();
+
+            return RedirectToAction("GetMoviesByUser", new { Id = User.Identity.GetUserId() });
+        }
+
+        public ActionResult UpdateMovie(string title)
+        {
+            //1. ORM 
+            Entities UpdateMovie = new Entities();
+
+            //2. find movie by title
+            UpdateMovie.MovieLists.Find(title);
+
+            ViewBag.MovieTitle = $"Rate {title}";
+
+            return View();
         }
 
 

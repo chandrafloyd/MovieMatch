@@ -29,7 +29,7 @@ namespace MovieMatch.Controllers
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
-            //keeps our temp data from the view
+            //keeps our temp data from the stored search action
             TempData.Keep();
 
             //http request
