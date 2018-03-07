@@ -77,14 +77,17 @@ namespace MovieMatch.Controllers
             Entities UpdateMovie = new Entities();
 
             //2. find movie by title
-            UpdateMovie.MovieLists.Find(title);
+         
+            MovieList MovieToBeUpdated = UpdateMovie.MovieLists.Find(title);
 
-            ViewBag.MovieTitle = $"Rate {title}";
+            ViewBag.MovieToUpdate = MovieToBeUpdated;
+
+            //ViewBag.MovieTitle = $"Rate {title}";
 
             return View();
         }
 
-
+        //note to self: create action SaveMovieUpdate
     }
 
 

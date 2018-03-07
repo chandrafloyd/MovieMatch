@@ -1,1 +1,38 @@
-﻿<h1>@ViewBag.MovieTitle</h1>
+﻿@using Microsoft.AspNet.Identity
+@model MovieList
+
+
+@*<h1>@ViewBag.MovieTitle</h1>*@
+
+
+<form action="/Azure/SaveMovieUpdate" method="post">
+    <h4>Rating:</h4> <select name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+
+    </select>
+    <br />
+
+    <h4>Watched:</h4> <select name="watched">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+    <br />
+
+    <input type="hidden" name="title" value="@ViewBag.MovieToUpdate.title" />
+    <input type="hidden" name="with_genres" value="@ViewBag.MovieToUpdate.with_genres" />
+    <input type="hidden" name="with_keywords" value="@ViewBag.MovieToUpdate.with_keywords" />
+    <input type="hidden" name="with_people" value="@ViewBag.MovieToUpdate.with_people" />
+    <input type="hidden" name="primary_release_year" value="@ViewBag.MovieToUpdate.primary_release_year" />
+    <input type="hidden" name="runtime" value="@ViewBag.MovieToUpdate.runtime" />
+    <input type="hidden" name="language" value="@ViewBag.MovieToUpdate.language" />
+    <input type="hidden" name="watched" value="@ViewBag.MovieToUpdate.watched" />
+    <input type="hidden" name="Id" value="@ViewBag.MovieToUpdate.@User.Identity.GetUserId()" />
+    <input type="hidden" name="poster_path" value="@ViewBag.MovieToUpdate.poster_path" />
+    <input type="hidden" name="overview" value="@ViewBag.MovieToUpdate.overview" />
+
+    <input type="submit" value="Submit" />
+</form>
