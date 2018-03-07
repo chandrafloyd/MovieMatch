@@ -15,26 +15,3 @@
     <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
     <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
 </address>*@
-<table class="table">
-	<tr>
-		<th>movie Title</th>
-		<th>Run Time</th>
-		<th>Description</th>
-	</tr>
-	@foreach (var C in ViewBag.Movie)
-	{
-		<tr>
-			<td>
-				@C.MovieTittle
-			</td>
-			<td>
-				@C.RunTime
-			</td>
-			<td>
-				@C.Description
-			</td>
-
-
-		</tr>
-	}
-</table>

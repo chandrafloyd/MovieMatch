@@ -1,0 +1,48 @@
+﻿
+
+
+
+<br />
+<br />
+<form action="/Azure/MovieByMood" method="get">
+	<select name="Mood">
+
+		<option value="Angry">Angry</option>
+		<option value="Superhero">Super Hero</option>
+		<option value="WantToLaugh">Want To Laugh</option>
+		<option value="WantToCry">Want To Cry</option>
+		<option value="WantToGoToAnotherPlanet">Want To Go To Another Planet</option>
+	</select>
+	<input type="submit" value="Search" />
+</form>
+<br />
+<br />
+
+
+
+
+
+<table class="table">
+	<tr>
+		<th>movie Title</th>
+		<th>Run Time</th>
+		<th>Description</th>
+	</tr>
+	@foreach (var C in ViewBag.MovieList)
+	{
+	<tr>
+		@*<td><img src="https://image.tmdb.org/t/p/w500/@r["poster_path"]" height="165" width="110" /></td>*@
+		<td>
+			@C.MovieTittle
+		</td>
+		<td>
+			@C.RunTime
+		</td>
+		<td>
+			@C.Description
+		</td>
+
+
+	</tr>
+	}
+</table>
