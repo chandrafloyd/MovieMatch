@@ -28,7 +28,8 @@
 					<li><a href="/TMDB/SearchMovies">Search Movies</a></li>
 					<li><a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">My Movie List</a></li>
 					<li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
-					<li>@Html.ActionLink("Recomendation", "Recomendation", "Home")</li>
+                    <li><a href="/Home/Recommendation">Recommendation</a></li>
+					
 				</ul>
                 @Html.Partial("_LoginPartial")
             </div>

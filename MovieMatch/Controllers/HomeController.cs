@@ -14,20 +14,30 @@ namespace MovieMatch.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Recomendation()
+        public ActionResult Recommendation()
         {
-            Entities ORM = new Entities();
-            var gener = ORM.SearchTerms.Find(User.Identity.GetUserId()).with_genres.ToList();
 
-           
-            var frequency = gener.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
-           var maxGener= frequency.Keys.Max();
+            Entities ORM = new Entities();
+
+            var UserId = User.Identity.GetUserId();
+
+            #region GenreRec
+            var GenreList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.with_genres).ToList();
+            var frequency = GenreList.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
+            var maxGener = frequency.Keys.Max();
+            #endregion
+
+            #region YearRec
+            var YearList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.primary_release_year).ToList();
+            var YearFreq = YearList.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
+            var MaxYear = YearFreq.Keys.Max();
+            #endregion
 
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener);
-           
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener + "&primary_release_year=" + MaxYear);
+
 
             //browser request
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
@@ -54,9 +64,12 @@ namespace MovieMatch.Controllers
 
                 return View();
             }
+            else
+            {
+                return View("../Shared/Error");
+            }
 
 
-            return View();
         }
 
         public ActionResult About()
