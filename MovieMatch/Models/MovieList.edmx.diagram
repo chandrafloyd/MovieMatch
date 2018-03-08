@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a01b40aa99064fa08984afafd292ca5f" Name="Diagram1" >
-        <EntityTypeShape EntityType="moviematchModel.MovieMood" Width="1.5" PointX="5.25" PointY="1.375" />
         <EntityTypeShape EntityType="moviematchModel.SearchTerm" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="moviematchModel.MovieList" Width="1.5" PointX="0.625" PointY="1.625" />
+        <EntityTypeShape EntityType="moviematchModel.MovieList" Width="1.5" PointX="0.75" PointY="2.125" />
+        <EntityTypeShape EntityType="moviematchModel.MovieMood" Width="1.5" PointX="5.125" PointY="2.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

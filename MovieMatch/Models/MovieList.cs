@@ -7,6 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 public class MovieList
 {
     public string title { get; set; }
@@ -21,6 +24,6 @@ public class MovieList
     public string Id { get; set; }
     public string overview { get; set; }
     public string poster_path { get; set; }
-
+    public Nullable<int> rating { get; set; }
 
 }

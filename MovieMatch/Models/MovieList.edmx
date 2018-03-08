@@ -20,16 +20,17 @@
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="poster_path" Type="nvarchar" MaxLength="128" />
           <Property Name="overview" Type="nvarchar" MaxLength="1000" />
+          <Property Name="rating" Type="int" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
-            <PropertyRef Name="MovieTittle" />
+            <PropertyRef Name="title" />
           </Key>
-          <Property Name="MovieTittle" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="RunTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="Mood" Type="varchar" MaxLength="50" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="Poster" Type="nvarchar" MaxLength="128" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="runtime" Type="int" />
+          <Property Name="mood" Type="varchar" MaxLength="50" />
+          <Property Name="overview" Type="nvarchar" MaxLength="1000" />
+          <Property Name="poster_path" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="SearchTerms">
           <Key>
@@ -52,20 +53,10 @@
     <edmx:ConceptualModels>
       <Schema Namespace="moviematchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="MovieMoods" EntityType="moviematchModel.MovieMood" />
           <EntitySet Name="SearchTerms" EntityType="moviematchModel.SearchTerm" />
           <EntitySet Name="MovieLists" EntityType="moviematchModel.MovieList" />
+          <EntitySet Name="MovieMoods" EntityType="moviematchModel.MovieMood" />
         </EntityContainer>
-        <EntityType Name="MovieMood">
-          <Key>
-            <PropertyRef Name="MovieTittle" />
-          </Key>
-          <Property Name="MovieTittle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RunTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Mood" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Poster" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="SearchTerm">
           <Key>
             <PropertyRef Name="searchnumber" />
@@ -92,6 +83,17 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="poster_path" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="overview" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MovieMood">
+          <Key>
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="runtime" Type="Int32" />
+          <Property Name="mood" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="overview" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="poster_path" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -99,17 +101,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="moviematchModelStoreContainer" CdmEntityContainer="Entities" >
-          <EntitySetMapping Name="MovieMoods">
-            <EntityTypeMapping TypeName="moviematchModel.MovieMood">
-              <MappingFragment StoreEntitySet="MovieMood">
-                <ScalarProperty Name="Poster" ColumnName="Poster" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Mood" ColumnName="Mood" />
-                <ScalarProperty Name="RunTime" ColumnName="RunTime" />
-                <ScalarProperty Name="MovieTittle" ColumnName="MovieTittle" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SearchTerms">
             <EntityTypeMapping TypeName="moviematchModel.SearchTerm">
               <MappingFragment StoreEntitySet="SearchTerms">
@@ -125,6 +116,7 @@
           <EntitySetMapping Name="MovieLists">
             <EntityTypeMapping TypeName="moviematchModel.MovieList">
               <MappingFragment StoreEntitySet="MovieList">
+                <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="overview" ColumnName="overview" />
                 <ScalarProperty Name="poster_path" ColumnName="poster_path" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -135,6 +127,17 @@
                 <ScalarProperty Name="with_people" ColumnName="with_people" />
                 <ScalarProperty Name="with_keywords" ColumnName="with_keywords" />
                 <ScalarProperty Name="with_genres" ColumnName="with_genres" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieMoods">
+            <EntityTypeMapping TypeName="moviematchModel.MovieMood">
+              <MappingFragment StoreEntitySet="MovieMood">
+                <ScalarProperty Name="poster_path" ColumnName="poster_path" />
+                <ScalarProperty Name="overview" ColumnName="overview" />
+                <ScalarProperty Name="mood" ColumnName="mood" />
+                <ScalarProperty Name="runtime" ColumnName="runtime" />
                 <ScalarProperty Name="title" ColumnName="title" />
               </MappingFragment>
             </EntityTypeMapping>

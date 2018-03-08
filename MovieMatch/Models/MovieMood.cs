@@ -14,10 +14,10 @@ namespace MovieMatch.Models
     
     public partial class MovieMood
     {
-        public string MovieTittle { get; set; }
-        public string RunTime { get; set; }
-        public string Mood { get; set; }
-        public string Description { get; set; }
-        public string Poster { get; set; }
+        public string title { get; set; }
+        public Nullable<int> runtime { get; set; }
+        public string mood { get; set; }
+        public string overview { get; set; }
+        public string poster_path { get; set; }
     }
 }

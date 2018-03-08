@@ -1,21 +1,27 @@
 ﻿
 @using Microsoft.AspNet.Identity
-<table class"table">
+<table class="table">
     <tr>
+        <th></th>
         <th>Title</th>
-        <th>Runtime</th>
         <th>Genre</th>
-       <th>Image</th>
+        <th>Runtime</th>
+        <th>My Rating</th>
+        <th>Add Rating</th>
+        <th>Delete from My List</th>
+        
     </tr>
 
     @foreach (var m in ViewBag.MovieList)
     {
     <tr>
+        <td><img src="https://image.tmdb.org/t/p/w500/@m.poster_path" height="165" width="110" /></td>
         <td>@m.title</td>
-        <td>@m.runtime</td>
         <td>@m.with_genres</td>
-        <td><a href="/Azure/DeleteFromMovieList?title=@m.title">Delete from My List</a></td>
-        <td><a href="/Azure/UpdateMovie?title=@m.title">Rate Movie</a></td>
+        <td>@m.runtime</td>
+        <td>@m.rating</td>
+        <td><a href="/Azure/UpdateMovie?title=@m.title">Rate</a></td>
+        <td><a href="/Azure/DeleteFromMovieList?title=@m.title">Delete</a></td>
     </tr>
     }
 </table>

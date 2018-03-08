@@ -44,6 +44,28 @@ namespace MovieMatch.Controllers
             return RedirectToAction("GetMoviesBySearch", "TMDB");
         }
 
+        public ActionResult MoodRecToMovieList(MovieList newMovie)
+        {
+            //0. Validation (build this last, but it's really the first step that gets executed)
+
+            if (!ModelState.IsValid)
+
+            {
+                return View("../Shared/Error"); //go to error page 
+            }
+
+            //1. ORM
+            Entities AddMovie = new Entities();  //copy the same ORM for each of these
+
+
+            //2. Action: Find the title, save to MovieList
+            AddMovie.MovieLists.Add(newMovie);
+            AddMovie.SaveChanges();
+
+            //3. stay on search results view
+            return RedirectToAction("GetMoviesByUser", new { Id = User.Identity.GetUserId() });
+        }
+
         public ActionResult MovieByMood(string Mood)
         {
 
@@ -51,7 +73,7 @@ namespace MovieMatch.Controllers
 
             Entities moviematchORM = new Entities();
 
-            ViewBag.MovieList = moviematchORM.MovieMoods.Where(x => x.Mood == Mood).ToList();
+            ViewBag.MovieList = moviematchORM.MovieMoods.Where(x => x.mood == Mood).ToList();
 
             return View("MovieByMood");
 
@@ -87,7 +109,25 @@ namespace MovieMatch.Controllers
             return View();
         }
 
-        //note to self: create action SaveMovieUpdate
+        public ActionResult SaveMovieUpdate(MovieList updatedMovie)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("../Shared/Error");// error page 
+            }
+
+            //1. ORM
+            Entities Movie = new Entities();
+
+            //2. Find the Movie 
+            Movie.Entry(Movie.MovieLists.Find(updatedMovie.title)).
+                CurrentValues.SetValues(updatedMovie);
+            //3.
+            Movie.SaveChanges();
+
+            //4. back to movielist for the user
+            return RedirectToAction("GetMoviesByUser", new { Id = User.Identity.GetUserId() });
+        }
     }
 
 

@@ -30,7 +30,7 @@
     <input type="hidden" name="runtime" value="@ViewBag.MovieToUpdate.runtime" />
     <input type="hidden" name="language" value="@ViewBag.MovieToUpdate.language" />
     <input type="hidden" name="watched" value="@ViewBag.MovieToUpdate.watched" />
-    <input type="hidden" name="Id" value="@ViewBag.MovieToUpdate.@User.Identity.GetUserId()" />
+    <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
     <input type="hidden" name="poster_path" value="@ViewBag.MovieToUpdate.poster_path" />
     <input type="hidden" name="overview" value="@ViewBag.MovieToUpdate.overview" />
 
