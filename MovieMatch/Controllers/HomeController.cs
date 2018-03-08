@@ -36,6 +36,8 @@ namespace MovieMatch.Controllers
             #region RuntimeRec
             var RuntimeList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.runtime).ToList();
             int RuntimeAverage = (int)Math.Round((decimal)RuntimeList.Average());
+            //consider taking this average and creating a min and max runtime (avg +/- 20 min) and pass both
+            //into api call with_runtime.lte = max, with_runtime.gte = min.
             #endregion
 
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
