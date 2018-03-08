@@ -21,7 +21,18 @@
         <td>@m.runtime</td>
         <td>@m.rating</td>
         <td><a href="/Azure/UpdateMovie?title=@m.title">Rate</a></td>
-        <td><a href="/Azure/DeleteFromMovieList?title=@m.title">Delete</a></td>
+        <td><a href="/Azure/DeleteFromMovieList?title=@m.title" onclick="return ConfirmDelete()">Delete</a></td>
     </tr>
     }
 </table>
+
+<script>
+    function ConfirmDelete() {
+        var Delete = confirm("Are you sure you want to delete this movie from your list?");
+        if (Delete == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

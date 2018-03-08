@@ -26,9 +26,15 @@
         <option value="10752">War</option>
         <option value="37">Western</option>
     </select><br />
-    <input type="text" name="runtime" placeholder="Max Run Time (minutes)" /><br />
-    <input type="text" name="primary_release_year" placeholder="Release Year" /><br />
+    <input type="text" name="runtime" placeholder="Max Run Time (minutes)" required oninvalid="this.setCustomValidity('Enter numbers')"
+           oninput="setCustomValidity('') " pattern="^[\d]+$" /><br /><br />
+    <input type="text" name="primary_release_year" placeholder="Release Year" required oninvalid="this.setCustomValidity('Enter year between 1900 and 2025')"
+           oninput="setCustomValidity('') " pattern="^(19\d{2}|20\d{2})$" />
     <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
     <input type="submit" value="Search" />
 </form>
+
+
+
+
 

@@ -6,7 +6,9 @@
 
 
 <form action="/Azure/SaveMovieUpdate" method="post">
-    <h4>Rating:</h4> <select name="rating">
+    <h4>Rating:</h4>
+    <select name="rating">
+        <option value="" selected disabled>Choose rating</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -16,7 +18,9 @@
     </select>
     <br />
 
-    <h4>Watched:</h4> <select name="watched">
+    <h4>Mark As Watched:</h4>
+    <select name="watched">
+        <option value="" selected disabled>Choose...</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
