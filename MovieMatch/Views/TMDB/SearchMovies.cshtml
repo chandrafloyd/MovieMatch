@@ -29,12 +29,12 @@
     </div><br />
     <div class="form-inline">
         Desired runtime:<br />
-        <input type="text" name="runtime" placeholder="(minutes)" required oninvalid="this.setCustomValidity('Enter numbers')"
+        <input type="text" name="runtime" placeholder="Minutes" required oninvalid="this.setCustomValidity('Enter numbers')"
                oninput="setCustomValidity('') " pattern="^[\d]+$" />
     </div>
     <br />
     <div class="form-inline">
-        Year released:<br /><input type="text" name="primary_release_year" placeholder="<1900-2025>" required oninvalid="this.setCustomValidity('Enter year between 1900 and 2025')"
+        Year released:<br /><input type="text" name="primary_release_year" placeholder="1900-2025" required oninvalid="this.setCustomValidity('Enter year between 1900 and 2025')"
                             oninput="setCustomValidity('') " pattern="^(19\d{2}|20\d{2})$" />
     </div>
     <input type="hidden" name="Id" value="@User.Identity.GetUserId()" /><br />

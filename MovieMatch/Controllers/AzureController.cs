@@ -5,10 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using MovieMatch.Models;
 using Microsoft.AspNet.Identity;
+using System.Security;
 
 
 namespace MovieMatch.Controllers
 {
+    [Authorize]
     public class AzureController : Controller
     {
         //find the movies saved to movielist for the logged in user

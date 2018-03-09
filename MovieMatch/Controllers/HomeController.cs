@@ -9,17 +9,20 @@ using System.Configuration;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Security;
+
 
 namespace MovieMatch.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Recommendation()
+        [Authorize]
+        public ActionResult Recommendation(string Id)
         {
 
             Entities ORM = new Entities();
 
-            var UserId = User.Identity.GetUserId();
+            var UserId = Id;
 
             #region GenreRec
             var GenreList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.with_genres).ToList();
@@ -80,7 +83,7 @@ namespace MovieMatch.Controllers
 
         }
 
-
+        [Authorize]
         public ActionResult AddRecommendationToMovieList(MovieList movie)
         {
             if (!ModelState.IsValid)
@@ -115,7 +118,7 @@ namespace MovieMatch.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -123,17 +126,22 @@ namespace MovieMatch.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
 
             return View();
         }
+
+        [Authorize]
         public ActionResult ShowMovies()
         {
             return View("SearchResults");

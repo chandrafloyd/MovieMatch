@@ -9,9 +9,13 @@ using Newtonsoft.Json.Linq;
 using System.Configuration;
 using MovieMatch.Models;
 using System.Text;
+using System.Security;
+using Microsoft.AspNet.Identity;
 
 namespace MovieMatch.Controllers
 {
+
+    [Authorize]
     public class TMDBController : Controller
     {
         // GET: TMDB
