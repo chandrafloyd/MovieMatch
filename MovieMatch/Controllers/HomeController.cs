@@ -36,14 +36,15 @@ namespace MovieMatch.Controllers
             #region RuntimeRec
             var RuntimeList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.runtime).ToList();
             int RuntimeAverage = (int)Math.Round((decimal)RuntimeList.Average());
-            //consider taking this average and creating a min and max runtime (avg +/- 20 min) and pass both
-            //into api call with_runtime.lte = max, with_runtime.gte = min.
+            int RuntimeHigh = RuntimeAverage + 15;
+            int RuntimeLow = RuntimeAverage - 15;
             #endregion
 
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" + RuntimeAverage);
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" + 
+            RuntimeHigh + "&with_runtime.gte=" + RuntimeLow);
 
 
             //browser request
@@ -87,17 +88,31 @@ namespace MovieMatch.Controllers
             {
                 return View("../Shared/Error"); //go to error page 
             }
+            try
+            {
+                //1. ORM
+                Entities AddMovie = new Entities();  //copy the same ORM for each of these
 
-            //1. ORM
-            Entities AddMovie = new Entities();  //copy the same ORM for each of these
+                if(!AddMovie.MovieLists.Any(x => x.title == movie.title))
+                {
+                    //2. Action: Add to MovieList table
+                    AddMovie.MovieLists.Add(movie);
+                    AddMovie.SaveChanges();
 
 
-            //2. Action: Add to MovieList table
-            AddMovie.MovieLists.Add(movie);
-            AddMovie.SaveChanges();
-
-            //3. stay on search results view
-            return RedirectToAction("Recommendation");
+                    //3. stay on search results view
+                    return RedirectToAction("Recommendation");
+                }
+                else
+                {
+                    //validates but does not warn user
+                    return RedirectToAction("Recommendation");
+                }
+            }
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
         }
 
 
