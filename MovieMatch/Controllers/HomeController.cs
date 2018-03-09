@@ -147,6 +147,13 @@ namespace MovieMatch.Controllers
             return View("SearchResults");
         }
 
+        [AllowAnonymous]
+        public ActionResult PrivacyPolicy()
+        {
+
+            ViewBag.Message = "Privacy page";
+            return View();
+        }
 
     }
 }

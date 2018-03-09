@@ -29,6 +29,7 @@
                     <li><a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">My Movie List</a></li>
                     <li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
                     <li><a href="/Home/Recommendation?Id=@User.Identity.GetUserId()">Recommendations</a></li>
+             
 
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -39,7 +40,8 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Movie Match Inc.   ~   <a href="/Home/PrivacyPolicy">Privacy Policy</a></p>
+       
         </footer>
     </div>
 

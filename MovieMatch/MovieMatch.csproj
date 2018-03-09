@@ -359,6 +359,7 @@
     <Content Include="Views\Azure\MovieByMood.cshtml" />
     <Content Include="Views\Azure\UpdateMovie.cshtml" />
     <Content Include="Views\Home\Recommendation.cshtml" />
+    <Content Include="Views\Home\PrivacyPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
