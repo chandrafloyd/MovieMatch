@@ -63,6 +63,39 @@ namespace MovieMatch.Controllers
                 //locate the data we want to see. check node tree in jsonviewer
                 ViewBag.RawResults = MovieParse["results"];
 
+                ////parse out the movie's id, this will be passed back into an api call to get the runtimes for each movie id from RawResults
+                ////this will be stored in a list
+
+                //List<int> RuntimeResults = new List<int>();
+
+                //foreach (var movieid in MovieParse["results"][6])
+                //{
+                //    //http request - call the API and pass in movieid
+                //    HttpWebRequest requestRuntime = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
+
+                //    //browser request
+                //    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+
+                //    //http response
+                //    HttpWebResponse responseRuntime = (HttpWebResponse)request.GetResponse();
+
+                //    //if we receive a response
+                //    if (response.StatusCode == HttpStatusCode.OK)
+                //    {
+                //        //open streamreader and read output
+                //        StreamReader rdRuntime = new StreamReader(response.GetResponseStream());
+                //        string outputRuntime = rdRuntime.ReadToEnd();
+
+                //        //parse data and store in object
+                //        JObject RuntimeParse = JObject.Parse(outputRuntime);
+
+                //        int ActualRuntime = (int)RuntimeParse["runtime"];
+
+                //        RuntimeResults.Add(ActualRuntime);
+                //    }
+                //}
+
+                //ViewBag.RuntimeResults = RuntimeResults;
 
                 return View("SearchResults");
             }

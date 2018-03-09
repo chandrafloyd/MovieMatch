@@ -26,14 +26,14 @@ namespace MovieMatch.Controllers
 
             #region GenreRec
             var GenreList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.with_genres).ToList();
-            var frequency = GenreList.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
-            var maxGener = frequency.Keys.Max();
+            var maxGenre = GenreList.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+            //what if the max is 2 genres?
             #endregion
 
             #region YearRec
             var YearList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.primary_release_year).ToList();
-            var YearFreq = YearList.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
-            var MaxYear = YearFreq.Keys.Max();
+            var MaxYear = YearList.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+            //what if the max is 2 years?
             #endregion
 
             #region RuntimeRec
@@ -46,7 +46,7 @@ namespace MovieMatch.Controllers
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" +
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGenre + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" +
             RuntimeHigh + "&with_runtime.gte=" + RuntimeLow);
 
 
