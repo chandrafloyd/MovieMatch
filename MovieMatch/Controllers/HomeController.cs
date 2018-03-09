@@ -104,12 +104,12 @@ namespace MovieMatch.Controllers
 
 
                     //3. stay on search results view
-                    return RedirectToAction("Recommendation");
+                    return RedirectToAction("Recommendation", new { Id = User.Identity.GetUserId() });
                 }
                 else
                 {
                     //validates but does not warn user
-                    return RedirectToAction("Recommendation");
+                    return RedirectToAction("Recommendation", new { Id = User.Identity.GetUserId() });
                 }
             }
             catch (Exception)
