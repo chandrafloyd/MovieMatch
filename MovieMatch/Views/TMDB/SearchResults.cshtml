@@ -24,7 +24,7 @@
                 <td>@r["release_date"]</td>
                 <td>@r["overview"]</td>
                 <td>@r["vote_average"]</td>
-                <td><a href="/Azure/AddToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&Id=@User.Identity.GetUserId()">Add to My List</a></td>
+                <td><a href="/Azure/AddToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&mmrating=@r["vote_average"]&Id=@User.Identity.GetUserId()">Add to My List</a></td>
             </tr>
         }
     }

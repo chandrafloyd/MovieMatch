@@ -7,6 +7,7 @@
         <th>Genre</th>
         <th>Runtime</th>
         <th>My Rating</th>
+        <th>MM Rating</th>
         <th>Add Rating</th>
         <th>Delete from My List</th>
         
@@ -20,6 +21,7 @@
         <td>@m.with_genres</td>
         <td>@m.runtime</td>
         <td>@m.rating</td>
+        <td>@m.mmrating</td>
         <td><a href="/Azure/UpdateMovie?title=@m.title">Rate</a></td>
         <td><a href="/Azure/DeleteFromMovieList?title=@m.title" onclick="return ConfirmDelete()">Delete</a></td>
     </tr>
