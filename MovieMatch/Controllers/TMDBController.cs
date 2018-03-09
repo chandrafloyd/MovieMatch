@@ -61,41 +61,55 @@ namespace MovieMatch.Controllers
                 JObject MovieParse = JObject.Parse(output);
 
                 //locate the data we want to see. check node tree in jsonviewer
-                ViewBag.RawResults = MovieParse["results"];
+                var MovieResults = MovieParse["results"];
+                ViewBag.RawResults = MovieResults;
 
-                ////parse out the movie's id, this will be passed back into an api call to get the runtimes for each movie id from RawResults
-                ////this will be stored in a list
+                rd.Close();
 
-                //List<int> RuntimeResults = new List<int>();
+                //parse out the movie's id, this will be passed back into an api call to get the runtimes for each movie id from RawResults
+                //this will be stored in a list
 
-                //foreach (var movieid in MovieParse["results"][6])
-                //{
-                //    //http request - call the API and pass in movieid
-                //    HttpWebRequest requestRuntime = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
+                List<int> RuntimeResults = new List<int>();
 
-                //    //browser request
-                //    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                foreach (var m in MovieResults)
+                {
+                    var movieid = m["id"];
+                    //http request - call the API and pass in movieid
+                    HttpWebRequest requestRuntime = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
 
-                //    //http response
-                //    HttpWebResponse responseRuntime = (HttpWebResponse)request.GetResponse();
+                    //browser request
+                    requestRuntime.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
 
-                //    //if we receive a response
-                //    if (response.StatusCode == HttpStatusCode.OK)
-                //    {
-                //        //open streamreader and read output
-                //        StreamReader rdRuntime = new StreamReader(response.GetResponseStream());
-                //        string outputRuntime = rdRuntime.ReadToEnd();
+                    //http response
+                    HttpWebResponse responseRuntime = (HttpWebResponse)requestRuntime.GetResponse();
 
-                //        //parse data and store in object
-                //        JObject RuntimeParse = JObject.Parse(outputRuntime);
+                    //if we receive a response
+                    if (responseRuntime.StatusCode == HttpStatusCode.OK)
+                    {
+                        //open streamreader and read output
+                        StreamReader rdRuntime = new StreamReader(responseRuntime.GetResponseStream());
+                        string outputRuntime = rdRuntime.ReadToEnd();
 
-                //        int ActualRuntime = (int)RuntimeParse["runtime"];
+                        //parse data and store in object
+                        JObject RuntimeParse = JObject.Parse(outputRuntime);
 
-                //        RuntimeResults.Add(ActualRuntime);
-                //    }
-                //}
+                        string RawRuntime = (string)RuntimeParse["runtime"];
+                        int ActualRuntime = 0;
+                        
+                        if(RawRuntime == "null")
+                        {
+                            ActualRuntime = 0;
+                        }
+                        else
+                        {
+                            ActualRuntime = int.Parse(RawRuntime);
+                        }
 
-                //ViewBag.RuntimeResults = RuntimeResults;
+                        RuntimeResults.Add(ActualRuntime);
+                    }
+                }
+
+                ViewBag.RuntimeResults = RuntimeResults;
 
                 return View("SearchResults");
             }
