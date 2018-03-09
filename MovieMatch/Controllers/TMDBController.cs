@@ -22,7 +22,7 @@ namespace MovieMatch.Controllers
 
         public ActionResult SearchMovies()
         {
-                return View();
+            return View();
         }
 
         public ActionResult GetMoviesBySearch()
@@ -59,7 +59,7 @@ namespace MovieMatch.Controllers
                 //locate the data we want to see. check node tree in jsonviewer
                 ViewBag.RawResults = MovieParse["results"];
 
-            
+
                 return View("SearchResults");
             }
 

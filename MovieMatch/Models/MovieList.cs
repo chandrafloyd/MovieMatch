@@ -6,6 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
 namespace MovieMatch.Models
 {
 
@@ -27,6 +28,7 @@ namespace MovieMatch.Models
         public string overview { get; set; }
         public string poster_path { get; set; }
         public Nullable<int> rating { get; set; }
+        public Nullable<decimal> mmrating { get; set; }
 
     }
 }

@@ -43,7 +43,7 @@ namespace MovieMatch.Controllers
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" + 
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGener + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" +
             RuntimeHigh + "&with_runtime.gte=" + RuntimeLow);
 
 
@@ -93,7 +93,7 @@ namespace MovieMatch.Controllers
                 //1. ORM
                 Entities AddMovie = new Entities();  //copy the same ORM for each of these
 
-                if(!AddMovie.MovieLists.Any(x => x.title == movie.title))
+                if (!AddMovie.MovieLists.Any(x => x.title == movie.title))
                 {
                     //2. Action: Add to MovieList table
                     AddMovie.MovieLists.Add(movie);
