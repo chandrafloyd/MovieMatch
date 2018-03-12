@@ -10,7 +10,8 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Security;
-
+using DataAccess;
+using libsvm;
 
 namespace MovieMatch.Controllers
 {
@@ -154,6 +155,7 @@ namespace MovieMatch.Controllers
             ViewBag.Message = "Privacy page";
             return View();
         }
+
         public ActionResult Mood()
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
@@ -195,11 +197,48 @@ namespace MovieMatch.Controllers
 
         }
 
-        public ActionResult FindMood()
+        public ActionResult FindMood(MovieList movie)
         {
+            const string dataFilePath = @"C:\Users\Skeletor\Desktop\GenreList.txt";
 
-           
+            var dataTable = DataTable.New.ReadCsv(dataFilePath);
+
+            List<string> x = dataTable.Rows.Select(row => row["Genre"]).ToList();
+
+            double[] y = dataTable.Rows.Select(row => double.Parse(row["Mood"])).ToArray();
+
+            var vocabulary = x.SelectMany(GetWords).Distinct().OrderBy(word => word).ToList();
+
+            var problemBuilder = new TextClassificationProblemBuilder();
+
+            var problem = problemBuilder.CreateProblem(x, y, vocabulary.ToList());
+
+            const int C = 1;
+
+            var model = new C_SVC(problem, KernelHelper.LinearKernel(), C);
+
+            string GenreId;
+
+            Dictionary<int, string> _predictionDictionary = new Dictionary<int, string> { { -2, "Scared" }, { -1, "Sad" }, { 1, "Laugh" }, { 2, "Romance" } };
+
+
+            GenreId = movie.with_genres;
+            var newX = TextClassificationProblemBuilder.CreateNode(GenreId, vocabulary);
+
+            var predictedY = model.Predict(newX);
+
+            ViewBag.Mood = _predictionDictionary[(int)predictedY];
+            ViewBag.MovieTitle = movie.title;
+            ViewBag.MoviePoster = movie.poster_path;
+
+
+
             return View();
+        }
+
+        private static IEnumerable<string> GetWords(string x)
+        {
+            return x.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
 
