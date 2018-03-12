@@ -33,7 +33,7 @@ namespace MovieMatch.Controllers
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
-            //keeps our temp data from the stored search action
+            //keeps temp data from the stored search action
             TempData.Keep();
 
             //http request
@@ -43,9 +43,6 @@ namespace MovieMatch.Controllers
 
             //browser request
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-
-
-            //request.Headers  (if needed, can request it. depends on the api documentation)
 
             //http response
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -60,43 +57,62 @@ namespace MovieMatch.Controllers
                 //parse data and store in object
                 JObject MovieParse = JObject.Parse(output);
 
-                //locate the data we want to see. check node tree in jsonviewer
+                //locate the data we want to see
+                //all results stored in a variable so that we can close the reader, make sub calls, but still access all results from original call
                 var MovieResults = MovieParse["results"];
-                ViewBag.RawResults = MovieResults;
+                ViewBag.RawResults = MovieParse["results"];
 
                 rd.Close();
 
-                //parse out the movie's id, this will be passed back into an api call to get the runtimes for each movie id from RawResults
+                //parse out the movie's id, this will be passed back into an api call to get the runtimes and genres for each movie id from RawResults
                 //this will be stored in a list
-
                 List<int> RuntimeResults = new List<int>();
+                List<string> GenreResults = new List<string>();
+                List<string> DisplayGenreNames = new List<string>();
 
                 foreach (var m in MovieResults)
                 {
                     var movieid = m["id"];
                     //http request - call the API and pass in movieid
-                    HttpWebRequest requestRuntime = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
+                    HttpWebRequest requestMovieDetails = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
 
                     //browser request
-                    requestRuntime.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                    requestMovieDetails.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
 
                     //http response
-                    HttpWebResponse responseRuntime = (HttpWebResponse)requestRuntime.GetResponse();
+                    HttpWebResponse responseMovieDetails = (HttpWebResponse)requestMovieDetails.GetResponse();
 
                     //if we receive a response
-                    if (responseRuntime.StatusCode == HttpStatusCode.OK)
+                    if (responseMovieDetails.StatusCode == HttpStatusCode.OK)
                     {
                         //open streamreader and read output
-                        StreamReader rdRuntime = new StreamReader(responseRuntime.GetResponseStream());
-                        string outputRuntime = rdRuntime.ReadToEnd();
+                        StreamReader rdMovieDetails = new StreamReader(responseMovieDetails.GetResponseStream());
+                        string outputMovieDetails = rdMovieDetails.ReadToEnd();
 
                         //parse data and store in object
-                        JObject RuntimeParse = JObject.Parse(outputRuntime);
+                        JObject MovieDetailsParse = JObject.Parse(outputMovieDetails);
 
-                        string RawRuntime = (string)RuntimeParse["runtime"];
+                        //get the genres -- json returns array. get names and add to list to pass to view.
+                        var RawGenres = MovieDetailsParse["genres"];
+
+                        GenreResults.Clear();
+                        foreach(var genreName in RawGenres)
+                        {
+                            string GenreName = (string)genreName["name"];
+                            GenreResults.Add(GenreName);
+                        }
+
+                        //turns our array of lists into list of strings
+                        string GenreStr = string.Join("\n", GenreResults.ToArray());
+                        DisplayGenreNames.Add(GenreStr);
+
+                        //get the runtime
+                        //some of the movie results do not have a runtime value listed. either a null value or a string = "null"
+                        //we will store those as zero so we can exclude zeros from our recommendation runtime calculation
+                        string RawRuntime = (string)MovieDetailsParse["runtime"];
                         int ActualRuntime = 0;
-                        
-                        if(RawRuntime == "null")
+
+                        if (!int.TryParse(RawRuntime, out ActualRuntime)) 
                         {
                             ActualRuntime = 0;
                         }
@@ -109,6 +125,7 @@ namespace MovieMatch.Controllers
                     }
                 }
 
+                ViewBag.GenreResults = DisplayGenreNames;
                 ViewBag.RuntimeResults = RuntimeResults;
 
                 return View("SearchResults");
