@@ -164,11 +164,12 @@ namespace MovieMatch.Controllers
 
         public ActionResult SearchListByTitle (string title)
         {
+            var UserID = User.Identity.GetUserId();
             //1. ORM
             Entities titleSearchORM = new Entities();
 
             //2. Search MyList by title
-            ViewBag.MovieList = titleSearchORM.MovieLists.Where(x => x.title.Contains(title)).OrderBy(x => x.title).ToList();
+            ViewBag.MovieList = titleSearchORM.MovieLists.Where(x => x.title.Contains(title) && x.Id == UserID).OrderBy(x => x.title).ToList();
 
             return View("../Azure/GetMoviesByUser");
         }

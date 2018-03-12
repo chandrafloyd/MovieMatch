@@ -157,19 +157,6 @@ namespace MovieMatch.Controllers
                 return View("../Shared/Error");
             }
         }
-
-
-
-        public ActionResult GetMoviesByUser(string Email)
-        {
-            Entities EOrm = new Entities();
-
-            ViewBag.MovieList = EOrm.MovieLists.Where(x => x.Email.Contains(Email)).ToList();
-
-            return View("MovieListResults");
-        }
-
-
     }
 
 
