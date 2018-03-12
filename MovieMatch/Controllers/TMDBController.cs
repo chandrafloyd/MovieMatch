@@ -70,7 +70,9 @@ namespace MovieMatch.Controllers
                 List<string> GenreResults = new List<string>();
                 List<string> DisplayGenreNames = new List<string>();
                 List<string> imdb_ID_Results = new List<string>();
-
+                List<string> releaseYear = new List<string>();
+                
+                
                 foreach (var m in MovieResults)
                 {
                     var movieid = m["id"];
@@ -127,6 +129,14 @@ namespace MovieMatch.Controllers
                         //get imdb id for each movie
                         var imdbID = MovieDetailsParse["imdb_id"];
                         imdb_ID_Results.Add((string)imdbID);
+
+                        //get release year
+                        string movieYear = (string)MovieDetailsParse["release_date"];
+                        string trimmedYear = movieYear.Substring(0, 4);
+
+                        releaseYear.Add(trimmedYear);
+
+
                     }
                     else
                     {
@@ -137,6 +147,7 @@ namespace MovieMatch.Controllers
                 ViewBag.GenreResults = DisplayGenreNames;
                 ViewBag.RuntimeResults = RuntimeResults;
                 ViewBag.imdb_ID_Results = imdb_ID_Results;
+                ViewBag.trimmedYear = releaseYear;
 
                 return View("SearchResults");
             }

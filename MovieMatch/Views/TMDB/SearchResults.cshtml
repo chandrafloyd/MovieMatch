@@ -25,7 +25,7 @@
             <td>@ViewBag.RuntimeResults[i]</td>
             <td>@ViewBag.RawResults[i]["vote_average"]</td>
             <td>
-                <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&primary_release_year=@ViewBag.RawResults[i]["release_date"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&Id=@User.Identity.GetUserId()">Add to My List</a>
+                <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Id=@User.Identity.GetUserId()">Add to My List</a>
             </td>
         </tr>
     }

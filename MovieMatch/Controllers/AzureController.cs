@@ -161,6 +161,18 @@ namespace MovieMatch.Controllers
             }
 
         }
+
+        public ActionResult SearchListByTitle (string title)
+        {
+            //1. ORM
+            Entities titleSearchORM = new Entities();
+
+            //2. Search MyList by title
+            ViewBag.MovieList = titleSearchORM.MovieLists.Where(x => x.title.Contains(title)).OrderBy(x => x.title).ToList();
+
+            return View("../Azure/GetMoviesByUser");
+        }
+
     }
 
 
