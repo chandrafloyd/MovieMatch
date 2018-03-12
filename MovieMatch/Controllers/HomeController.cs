@@ -154,6 +154,54 @@ namespace MovieMatch.Controllers
             ViewBag.Message = "Privacy page";
             return View();
         }
+        public ActionResult Mood()
+        {
+            var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
+
+            HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
+            "&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1");
+
+
+            //browser request
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+
+
+            //request.Headers  (if needed, can request it. depends on the api documentation)
+
+            //http response
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            //if we receive a response
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                //open streamreader and read output
+                StreamReader rd = new StreamReader(response.GetResponseStream());
+                string output = rd.ReadToEnd();
+
+                //parse data and store in object
+                JObject MovieParse = JObject.Parse(output);
+
+                //locate the data we want to see. check node tree in jsonviewer
+                ViewBag.RawResults = MovieParse["results"];
+
+
+                return View();
+            }
+            else
+            {
+                return View("../Shared/Error");
+            }
+
+
+        }
+
+        public ActionResult FindMood()
+        {
+
+           
+            return View();
+        }
+
 
     }
 }

@@ -21,17 +21,17 @@
                 @Html.ActionLink("MovieMatch", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li><a href="/TMDB/SearchMovies">Search Movies</a></li>
-                    <li><a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">My Movie List</a></li>
-                    <li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
-                    <li><a href="/Home/Recommendation?Id=@User.Identity.GetUserId()">Recommendations</a></li>
-             
+				<ul class="nav navbar-nav">
+					@*<li>@Html.ActionLink("Home", "Index", "Home")</li>
+		<li>@Html.ActionLink("About", "About", "Home")</li>
+		<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+					<li><a href="/TMDB/SearchMovies">Search Movies</a></li>
+					<li><a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">My Movie List</a></li>
+					<li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
+					<li><a href="/Home/Recommendation?Id=@User.Identity.GetUserId()">Recommendations</a></li>
+					<li><a href="/Home/Mood?Id=@User.Identity.GetUserId()">Mood</a></li>
 
-                </ul>
+				</ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

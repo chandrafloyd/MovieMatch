@@ -361,6 +361,8 @@
     <Content Include="Views\Azure\UpdateMovie.cshtml" />
     <Content Include="Views\Home\Recommendation.cshtml" />
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Home\Mood.cshtml" />
+    <Content Include="Views\Home\FindMood.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
