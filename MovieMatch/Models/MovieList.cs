@@ -29,6 +29,7 @@ namespace MovieMatch.Models
         public string poster_path { get; set; }
         public Nullable<int> rating { get; set; }
         public Nullable<decimal> mmrating { get; set; }
+        public string imdb_id { get; set; }
 
     }
 }

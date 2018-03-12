@@ -19,5 +19,6 @@ namespace MovieMatch.Models
         public string mood { get; set; }
         public string overview { get; set; }
         public string poster_path { get; set; }
+        public string imdb_id { get; set; }
     }
 }

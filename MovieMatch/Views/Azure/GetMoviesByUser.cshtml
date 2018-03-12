@@ -8,9 +8,10 @@
         <th>Runtime</th>
         <th>My Rating</th>
         <th>MM Rating</th>
+        <th>Find this Movie</th>
         <th>Add Rating</th>
         <th>Delete from My List</th>
-        
+
     </tr>
 
     @foreach (var m in ViewBag.MovieList)
@@ -22,6 +23,11 @@
         <td>@m.runtime</td>
         <td>@m.rating</td>
         <td>@m.mmrating</td>
+        <td>
+            <a href="http://www.imdb.com/title/@m.imdb_id/?ref_=fn_al_tt_1">
+                <img src="~/images/IMDb_icon.png" height="40" width="64" />
+            </a>
+        </td>
         <td><a href="/Azure/UpdateMovie?title=@m.title">Rate</a></td>
         <td><a href="/Azure/DeleteFromMovieList?title=@m.title" onclick="return ConfirmDelete()">Delete</a></td>
     </tr>

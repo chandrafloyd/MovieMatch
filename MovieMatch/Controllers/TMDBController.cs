@@ -69,6 +69,7 @@ namespace MovieMatch.Controllers
                 List<int> RuntimeResults = new List<int>();
                 List<string> GenreResults = new List<string>();
                 List<string> DisplayGenreNames = new List<string>();
+                List<string> imdb_ID_Results = new List<string>();
 
                 foreach (var m in MovieResults)
                 {
@@ -103,7 +104,7 @@ namespace MovieMatch.Controllers
                         }
 
                         //turns our array of lists into list of strings
-                        string GenreStr = string.Join("\n", GenreResults.ToArray());
+                        string GenreStr = string.Join(", ", GenreResults.ToArray());
                         DisplayGenreNames.Add(GenreStr);
 
                         //get the runtime
@@ -122,11 +123,20 @@ namespace MovieMatch.Controllers
                         }
 
                         RuntimeResults.Add(ActualRuntime);
+
+                        //get imdb id for each movie
+                        var imdbID = MovieDetailsParse["imdb_id"];
+                        imdb_ID_Results.Add((string)imdbID);
+                    }
+                    else
+                    {
+                        return View("../Shared/Error");
                     }
                 }
 
                 ViewBag.GenreResults = DisplayGenreNames;
                 ViewBag.RuntimeResults = RuntimeResults;
+                ViewBag.imdb_ID_Results = imdb_ID_Results;
 
                 return View("SearchResults");
             }

@@ -250,6 +250,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\film_reel.jpg" />
+    <Content Include="images\IMDb_icon.png" />
     <Content Include="Models\MovieList.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MovieList.edmx</DependentUpon>

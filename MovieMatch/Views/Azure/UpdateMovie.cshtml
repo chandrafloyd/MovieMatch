@@ -1,12 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity
 @model MovieMatch.Models.MovieList
-
-
-@*<h1>@ViewBag.MovieTitle</h1>*@
-
-
+<br />
+<h2>@ViewBag.MovieToUpdate.title</h2>
+<img src="https://image.tmdb.org/t/p/w500/@ViewBag.MovieToUpdate.poster_path" height="330" width="220" />
+<br /><br />
 <form action="/Azure/SaveMovieUpdate" method="post">
-    <h4>Rating:</h4>
+    Rating:  
     <select name="rating">
         <option value="" selected disabled>Choose rating</option>
         <option value="1">1</option>
@@ -19,18 +18,16 @@
         <option value="8">8</option>
         <option value="9">9</option>
         <option value="10">10</option>
-        
-
     </select>
-    <br />
+    <br /><br />
 
-    <h4>Mark As Watched:</h4>
+    Mark As Watched:  
     <select name="watched">
         <option value="" selected disabled>Choose...</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
-    <br />
+    <br /><br />
 
     <input type="hidden" name="title" value="@ViewBag.MovieToUpdate.title" />
     <input type="hidden" name="with_genres" value="@ViewBag.MovieToUpdate.with_genres" />
@@ -44,6 +41,6 @@
     <input type="hidden" name="mmrating" value="@ViewBag.MovieToUpdate.mmrating" />
     <input type="hidden" name="poster_path" value="@ViewBag.MovieToUpdate.poster_path" />
     <input type="hidden" name="overview" value="@ViewBag.MovieToUpdate.overview" />
-
-    <input type="submit" value="Submit" />
+    <input type="hidden" name="imdb_id" value="@ViewBag.MovieToUpdate.imdb_id" />
+    <input type="submit" value="Save" />
 </form>

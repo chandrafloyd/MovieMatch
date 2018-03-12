@@ -2,34 +2,6 @@
 
 <h1>Search Results</h1>
 
-@*@model MovieMatch.Models.MovieList
-<table class="table">
-
-    <tr>
-        <th>Title</th>
-        <th></th>
-        <th>Released</th>
-        <th>Plot</th>
-        <th>MM Rating</th>
-        <th>Add to My List</th>
-    </tr>
-
-
-    @foreach (var r in ViewBag.RawResults)
-    {
-        {
-            <tr>
-                <td>@r["original_title"]</td>
-                <td><img src="https://image.tmdb.org/t/p/w500/@r["poster_path"]" height="165" width="110" /></td>
-                <td>@r["release_date"]</td>
-                <td>@r["overview"]</td>
-                <td>@r["vote_average"]</td>
-                <td><a href="/Azure/AddToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&mmrating=@r["vote_average"]&Id=@User.Identity.GetUserId()">Add to My List</a></td>
-            </tr>
-        }
-    }
-</table>*@
-
 @model MovieMatch.Models.MovieList
 <table class="table">
     <tr>
@@ -53,7 +25,7 @@
             <td>@ViewBag.RuntimeResults[i]</td>
             <td>@ViewBag.RawResults[i]["vote_average"]</td>
             <td>
-                <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&primary_release_year=@ViewBag.RawResults[i]["release_date"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&Id=@User.Identity.GetUserId()">Add to My List</a>
+                <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&primary_release_year=@ViewBag.RawResults[i]["release_date"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&Id=@User.Identity.GetUserId()">Add to My List</a>
             </td>
         </tr>
     }
