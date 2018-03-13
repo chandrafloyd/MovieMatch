@@ -43,7 +43,7 @@ namespace MovieMatch.LinkFinder
                     string value = a.Groups[1].Value;
 
                     //get href attribute
-                    //Match findHref = Regex.Match(value, @"href=(["'])(.*?)\1", RegexOptions.Singleline);
+                    Match findHref = Regex.Match(value, @"href=", RegexOptions.Singleline);
                     if (findHref.Success)
                     {
                         AmazonLink.Href = findHref.Groups[1].Value;
