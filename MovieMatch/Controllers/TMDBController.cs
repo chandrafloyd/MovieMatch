@@ -148,9 +148,11 @@ namespace MovieMatch.Controllers
                 //
                 foreach (string result in imdb_ID_Results)
                 {
-                    string imdbURL = "http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1";
-                    LinkItem AmazonLink = LinkFinder.LinkFinder.SearchLinks(imdbURL);
-                    AmazonLinkList.Add(AmazonLink.ToString());
+                    WebClient W = new WebClient();
+                    
+                    string imdbURL = W.DownloadString("http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1");
+                    string AmazonLink = LinkFinder.LinkFinder.SearchLinks(imdbURL);
+                    AmazonLinkList.Add(AmazonLink);
                 }
 
                 ViewBag.GenreResults = DisplayGenreNames;
