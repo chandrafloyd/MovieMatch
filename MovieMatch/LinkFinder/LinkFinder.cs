@@ -9,12 +9,6 @@ namespace MovieMatch.LinkFinder
     public struct LinkItem
     {
         public string Href;
-        public string Text;
-
-        public override string ToString()
-        {
-            return Href + "\n\t" + Text;
-        }
     }
 
     public class LinkFinder
@@ -48,10 +42,6 @@ namespace MovieMatch.LinkFinder
                     {
                         AmazonLink.Href = findHref.Groups[1].Value;
                     }
-
-                    // Remove inner tags from text.
-                    string t = Regex.Replace(value, @"\s*<.*?>\s*", "",RegexOptions.Singleline);
-                    AmazonLink.Text = t;
                 }
             }
             return AmazonLink;
