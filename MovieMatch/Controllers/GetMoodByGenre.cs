@@ -21,7 +21,7 @@ namespace MovieMatch.Controllers
         {
             var node = new List<svm_node>(vocabulary.Count);
 
-            string[] words = x.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+           string[] words = x.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < vocabulary.Count; i++)
             {

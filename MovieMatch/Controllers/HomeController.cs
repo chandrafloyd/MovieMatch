@@ -199,7 +199,7 @@ namespace MovieMatch.Controllers
 
         public ActionResult FindMood(MovieList movie)
         {
-            const string dataFilePath = "../MoodCsv/GenreList.txt";
+            const string dataFilePath = @"C:\Users\Skeletor\source\repos\MovieMatch\MovieMatch\MoodCsv\GenreList.txt";
 
 
             var dataTable = DataTable.New.ReadCsv(dataFilePath);
@@ -218,17 +218,17 @@ namespace MovieMatch.Controllers
 
             var model = new C_SVC(problem, KernelHelper.LinearKernel(), C);
 
-            string GenreId;
+            string GenreId = movie.with_genres;
 
             Dictionary<int, string> _predictionDictionary = new Dictionary<int, string> { { -2, "Scared" }, { -1, "Sad" }, { 1, "Laugh" }, { 2, "Romance" } };
 
-
-            GenreId = movie.with_genres;
+            //maybe add do,while here
+            //GenreId = movie.with_genres;
             var newX = TextClassificationProblemBuilder.CreateNode(GenreId, vocabulary);
 
             var predictedY = model.Predict(newX);
 
-            ViewBag.Mood = _predictionDictionary[(int)predictedY];
+            ViewBag.Mood = _predictionDictionary[-2];
             ViewBag.MovieTitle = movie.title;
             ViewBag.MoviePoster = movie.poster_path;
 
