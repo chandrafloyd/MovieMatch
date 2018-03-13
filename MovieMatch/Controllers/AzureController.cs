@@ -126,7 +126,7 @@ namespace MovieMatch.Controllers
             //1. ORM 
             Entities UpdateMovie = new Entities();
 
-            //2. find movie by title
+            //2. find movie by title //where userID = Id?
             MovieList MovieToBeUpdated = UpdateMovie.MovieLists.Find(title);
 
             ViewBag.MovieToUpdate = MovieToBeUpdated;

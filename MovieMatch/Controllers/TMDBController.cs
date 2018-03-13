@@ -11,6 +11,7 @@ using MovieMatch.Models;
 using System.Text;
 using System.Security;
 using Microsoft.AspNet.Identity;
+using MovieMatch.LinkFinder;
 
 namespace MovieMatch.Controllers
 {
@@ -71,8 +72,8 @@ namespace MovieMatch.Controllers
                 List<string> DisplayGenreNames = new List<string>();
                 List<string> imdb_ID_Results = new List<string>();
                 List<string> releaseYear = new List<string>();
-                
-                
+                List<string> AmazonLinkList = new List<string>();
+
                 foreach (var m in MovieResults)
                 {
                     var movieid = m["id"];
@@ -144,10 +145,19 @@ namespace MovieMatch.Controllers
                     }
                 }
 
+                //
+                foreach (string result in imdb_ID_Results)
+                {
+                    string imdbURL = "http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1";
+                    LinkItem AmazonLink = LinkFinder.LinkFinder.SearchLinks(imdbURL);
+                    AmazonLinkList.Add(AmazonLink.ToString());
+                }
+
                 ViewBag.GenreResults = DisplayGenreNames;
                 ViewBag.RuntimeResults = RuntimeResults;
                 ViewBag.imdb_ID_Results = imdb_ID_Results;
                 ViewBag.trimmedYear = releaseYear;
+                ViewBag.AmazonLinks = AmazonLinkList;
 
                 return View("SearchResults");
             }
