@@ -14,7 +14,6 @@ namespace MovieMatch.Controllers
     public class AzureController : Controller
     {
         //find the movies saved to movielist for the logged in user
-        //need to add authorization so that this action cannot be accessed via anonymous
         public ActionResult GetMoviesByUser(string Id)
         {
             Entities MyMovieList = new Entities();
@@ -23,6 +22,44 @@ namespace MovieMatch.Controllers
 
             return View();
         }
+
+        #region Sort By Table Headers
+
+        //sort movie listby runtime
+        public ActionResult SortMovieListByRuntime()
+        {
+            //0. store UserID in a variable so it will only sort for the logged in user
+            var UserID = User.Identity.GetUserId();
+
+            //1. ORM
+            Entities MyMovieList = new Entities();
+
+            //2. Action: Sort List by ascending
+
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x =>x.Id == UserID).OrderBy(x => x.runtime).ToList();
+
+            return View("GetMoviesByUser");
+        }
+
+
+        //sort movie listby year
+        public ActionResult SortMovieListByYear()
+        {
+            //0. store UserID in a variable so it will only sort for the logged in user
+            var UserID = User.Identity.GetUserId();
+
+            //1. ORM
+            Entities MyMovieList = new Entities();
+
+            //2. Action: Sort List by ascending
+
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID).OrderBy(x => x.runtime).ToList();
+
+            return View("GetMoviesByUser");
+        }
+
+
+        #endregion Sort By Table Headers
 
         //logged in user saves movie to their movielist
         public ActionResult AddToMovieList(MovieList newMovie)
@@ -149,7 +186,7 @@ namespace MovieMatch.Controllers
                 //2. Find the Movie 
                 Movie.Entry(Movie.MovieLists.Find(updatedMovie.title)).
                     CurrentValues.SetValues(updatedMovie);
-                //3.
+                //3. 
                 Movie.SaveChanges();
 
                 //4. back to movielist for the user
@@ -162,6 +199,7 @@ namespace MovieMatch.Controllers
 
         }
 
+        //search movie list by title
         public ActionResult SearchListByTitle (string title)
         {
             var UserID = User.Identity.GetUserId();

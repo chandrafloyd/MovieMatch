@@ -13,8 +13,8 @@
         <th></th>
         <th>Title</th>
         <th>Genre</th>
-        <th>Runtime</th>
-        <th>Year</th>
+        <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>  
+        <th><a href="/Azure/SortMovieListByYear">Year</a></th>
         <th>My Rating</th>
         <th>MM Rating</th>
         <th>Find this Movie</th>
@@ -34,10 +34,9 @@
             <td>@m.rating</td>
             <td>@m.mmrating</td>
             <td>
-                <a href="http://www.imdb.com/title/@m.imdb_id/?ref_=fn_al_tt_1" target="_blank"
->
+                <a href="http://www.imdb.com/title/@m.imdb_id/?ref_=fn_al_tt_1" target="_blank">
                     <img src="~/images/IMDb_icon.png" height="40" width="64" />
-                    
+
                 </a>
             </td>
             <td><a href="/Azure/UpdateMovie?title=@m.title">Rate</a></td>
