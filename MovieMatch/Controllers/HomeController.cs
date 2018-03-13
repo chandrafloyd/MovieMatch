@@ -199,7 +199,8 @@ namespace MovieMatch.Controllers
 
         public ActionResult FindMood(MovieList movie)
         {
-            const string dataFilePath = @"C:\Users\Skeletor\Desktop\GenreList.txt";
+            const string dataFilePath = "../MoodCsv/GenreList.txt";
+
 
             var dataTable = DataTable.New.ReadCsv(dataFilePath);
 
