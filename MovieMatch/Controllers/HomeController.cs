@@ -228,7 +228,7 @@ namespace MovieMatch.Controllers
 
             var predictedY = model.Predict(newX);
 
-            ViewBag.Mood = _predictionDictionary[-2];
+            ViewBag.Mood = _predictionDictionary[(int)predictedY];
             ViewBag.MovieTitle = movie.title;
             ViewBag.MoviePoster = movie.poster_path;
 

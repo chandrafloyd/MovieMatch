@@ -14,24 +14,37 @@ namespace MovieMatch.LinkFinder
         public static string SearchLinks(string file)
         {
             //List<LinkItem> AmazonLinkList = new List<LinkItem>();
-            string Link = "";
-
+            //string Link = "";
+            string Place = "hi";
             // 1.
             // Find all matches in file.
+            if (!Regex.IsMatch(file, @"(info table-cell)[\d\D]*(aiv)"""))
+            {
+                return Place;
+            }
+            else
+            {
+                MatchCollection divMatch = Regex.Matches(file, @"(info table-cell)[\d\D]*(aiv)""");
+                MatchCollection Link = Regex.Matches(divMatch[0].Value, @"(href=)[\d\D]*(aiv)""");
+                return  Link[0].Value;
+            }
 
             //find the div that contains "info table-cell"
-            MatchCollection divMatch = Regex.Matches(file, "(<div class=\"info table-cell\">)" + @"[\d\D]*(<\/h2>)");
+
+            
+
 
             //loop through each div match (should be just 1)
-            foreach (Match d in divMatch)
-            {
-                //Find all anchor tag matches within div
+            
+            //foreach (Match d in divMatch)
+            //{
+            //    //Find all anchor tag matches within div
 
-                Link = Regex.Matches(file, @"(href=)[\d\D]*" + "(\")").ToString();
+            //    Link = Regex.Matches(divMatch.ToString(), @"(href=)[\d\D]*(aiv)""").ToString();
 
 
-            }
-            return Link;
+            //}
+            //return Link[0].Value;
         }
     }
 }
