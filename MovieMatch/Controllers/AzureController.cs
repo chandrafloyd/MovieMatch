@@ -23,9 +23,20 @@ namespace MovieMatch.Controllers
             return View();
         }
 
-        #region Sort By Table Headers
 
-        //sort movie listby runtime
+        public ActionResult ReturnToMoviesByUser(string Id)
+        {
+            Entities MyMovieList = new Entities();
+
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == Id).ToList();
+
+            return View();
+        }
+
+
+        #region Sort MovieList By Table Headers
+
+        //sort movie list by runtime
         public ActionResult SortMovieListByRuntime()
         {
             //0. store UserID in a variable so it will only sort for the logged in user
@@ -36,13 +47,12 @@ namespace MovieMatch.Controllers
 
             //2. Action: Sort List by ascending
 
-            ViewBag.MovieList = MyMovieList.MovieLists.Where(x =>x.Id == UserID).OrderBy(x => x.runtime).ToList();
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID).OrderBy(x => x.runtime).ToList();
 
             return View("GetMoviesByUser");
         }
 
-
-        //sort movie listby year
+        //sort movie list by year
         public ActionResult SortMovieListByYear()
         {
             //0. store UserID in a variable so it will only sort for the logged in user
@@ -58,8 +68,37 @@ namespace MovieMatch.Controllers
             return View("GetMoviesByUser");
         }
 
+        //sort movie list by API rating
+        public ActionResult SortMovieListByAPIRating()
+        {
+            //0. store UserID in a variable so it will only sort for the logged in user
+            var UserID = User.Identity.GetUserId();
 
-        #endregion Sort By Table Headers
+            //1. ORM
+            Entities MyMovieList = new Entities();
+
+            //2. Action: Sort List by ascending
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID).OrderBy(x => x.mmrating).ToList();
+
+            return View("GetMoviesByUser");
+        }
+
+        //sort movie list by user rating
+        public ActionResult SortMovieListByUserRating()
+        {
+            //0. store UserID in a variable so it will only sort for the logged in user
+            var UserID = User.Identity.GetUserId();
+
+            //1. ORM
+            Entities MyMovieList = new Entities();
+
+            //2. Action: Sort List by ascending
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID).OrderBy(x => x.rating).ToList();
+
+            return View("GetMoviesByUser");
+        }
+
+        #endregion Sort MovieList By Table Headers
 
         //logged in user saves movie to their movielist
         public ActionResult AddToMovieList(MovieList newMovie)
@@ -200,7 +239,7 @@ namespace MovieMatch.Controllers
         }
 
         //search movie list by title
-        public ActionResult SearchListByTitle (string title)
+        public ActionResult SearchListByTitle(string title)
         {
             var UserID = User.Identity.GetUserId();
             //1. ORM
@@ -210,6 +249,22 @@ namespace MovieMatch.Controllers
             ViewBag.MovieList = titleSearchORM.MovieLists.Where(x => x.title.Contains(title) && x.Id == UserID).OrderBy(x => x.title).ToList();
 
             return View("../Azure/GetMoviesByUser");
+        }
+
+        //filter by genre
+        public ActionResult FilterByGenre(string with_genres)
+        {
+            //0. store UserID in a variable so it will only sort for the logged in user
+            var UserID = User.Identity.GetUserId();
+
+            //1. ORM
+            Entities MyMovieList = new Entities();
+
+            //2. Action: Sort List by ascending
+
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID && x.with_genres==with_genres).OrderBy(x => x.with_genres).ToList();
+
+            return View("GetMoviesByUser");
         }
 
     }

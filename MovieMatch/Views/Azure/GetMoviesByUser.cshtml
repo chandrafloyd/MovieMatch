@@ -1,22 +1,59 @@
 ﻿
 @using Microsoft.AspNet.Identity
 
+
 <br />
 <form action="/Azure/SearchListByTitle" method="get">
     <input type="search" placeholder="Search by Title" name="title" />
-    <input type="submit" />
+    <input type="submit" value="Search" />
 </form>
-<br />
+
+
+
+@*same table as on /TMBD/SearchMovies.cshtml view*@
+
+<form action="/Azure/FilterByGenre/" method="get" class="form-inline">
+    <div class="form-inline">
+      
+        <select name="with_genres" >
+            <option value="">Filter by Genre</option>
+            <option value="28">Action</option>
+            <option value="12">Adventure</option>
+            <option value="16">Animation</option>
+            <option value="35">Comedy</option>
+            <option value="80">Crime</option>
+            <option value="99">Documentary</option>
+            <option value="18">Drama</option>
+            <option value="10751">Family</option>
+            <option value="14">Fantasy</option>
+            <option value="36">History</option>
+            <option value="27">Horror</option>
+            <option value="10402">Music</option>
+            <option value="9648">Mystery</option>
+            <option value="10749">Romance</option>
+            <option value="878">Science Fiction</option>
+            <option value="10770">TV Movie</option>
+            <option value="53">Thriller</option>
+            <option value="10752">War</option>
+            <option value="37">Western</option>
+        </select>
+        <input type="submit" />
+    </div>
+</form>
+
+<a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">Clear Search</a><br /><br />
+
+
 
 <table class="table">
     <tr>
         <th></th>
         <th>Title</th>
         <th>Genre</th>
-        <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>  
+        <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>
         <th><a href="/Azure/SortMovieListByYear">Year</a></th>
-        <th>My Rating</th>
-        <th>MM Rating</th>
+        <th><a href="/Azure/SortMovieListByUserRating">My Rating</a></th>
+        <th><a href="/Azure/SortMovieListByAPIRating">MM Rating</a></th>
         <th>Find this Movie</th>
         <th>Add Rating</th>
         <th>Delete from My List</th>
@@ -36,7 +73,6 @@
             <td>
                 <a href="http://www.imdb.com/title/@m.imdb_id/?ref_=fn_al_tt_1" target="_blank">
                     <img src="~/images/IMDb_icon.png" height="40" width="64" />
-
                 </a>
             </td>
             <td><a href="/Azure/UpdateMovie?title=@m.title">Rate</a></td>

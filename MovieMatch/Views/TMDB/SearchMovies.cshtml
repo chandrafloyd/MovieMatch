@@ -1,11 +1,14 @@
 ﻿@using Microsoft.AspNet.Identity;
 <h2>Please select your search critera:</h2>
 
+
+@*same table as on /Azure/GetMoviesByUser.cshtml view*@
 @model MovieMatch.Models.SearchTerm
 <form action="/StoredSearch/SaveSearchResult/" method="get" class="form-inline">
     <div class="form-inline">
-        Please select a genre:<br />
-        <select name="with_genres" required">
+       
+        <select name="with_genres" required>
+            <option value="">Genre</option>
             <option value="28">Action</option>
             <option value="12">Adventure</option>
             <option value="16">Animation</option>
@@ -26,6 +29,7 @@
             <option value="10752">War</option>
             <option value="37">Western</option>
         </select>
+        <input type="submit" />
     </div><br />
     <div class="form-inline">
         Desired runtime:<br />
@@ -35,7 +39,7 @@
     <br />
     <div class="form-inline">
         Year released:<br /><input type="text" name="primary_release_year" placeholder="1900-2025" required oninvalid="this.setCustomValidity('Enter year between 1900 and 2025')"
-                            oninput="setCustomValidity('') " pattern="^(19\d{2}|20\d{2})$" />
+                                   oninput="setCustomValidity('') " pattern="^(19\d{2}|20\d{2})$" />
     </div>
     <input type="hidden" name="Id" value="@User.Identity.GetUserId()" /><br />
     <div class="form-inline">
