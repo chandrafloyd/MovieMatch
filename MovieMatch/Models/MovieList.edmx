@@ -23,7 +23,7 @@
           <Property Name="rating" Type="int" />
           <Property Name="mmrating" Type="decimal" Precision="3" Scale="1" />
           <Property Name="imdb_id" Type="nvarchar" MaxLength="200" />
-          <Property Name="Amazon_URL" Type="nvarchar" MaxLength="500" />
+          <Property Name="Amazon_URL" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
@@ -101,7 +101,7 @@
           <Property Name="rating" Type="Int32" />
           <Property Name="mmrating" Type="Decimal" Precision="3" Scale="1" />
           <Property Name="imdb_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Amazon_URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Amazon_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>

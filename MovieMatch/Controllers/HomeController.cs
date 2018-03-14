@@ -249,7 +249,7 @@ namespace MovieMatch.Controllers
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1");
+            "&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1&with_genres=" + with_genres);
 
 
             //browser request
@@ -279,21 +279,19 @@ namespace MovieMatch.Controllers
                 foreach (var m in RawResults)
                 {
                     var genreList = m["genre_ids"];
+                    
+
+                    string genreStr = string.Join(" ", genreList);
 
 
-                    
-                    
-                      string genreStr=string.Join(" ",genreList);
-
-                    
-                    if (FindMoodMethod(genreStr)==int.Parse(with_genres)) 
+                    if (FindMoodMethod(genreStr) == int.Parse(with_genres))
                     {
 
-                       
+
                         MovieList movie = new MovieList();
                         movie.title = (m["original_title"]).ToString();
-                        movie.poster_path= (m["poster_path"]).ToString();
-                        movie.overview= (m["overview"]).ToString();
+                        movie.poster_path = (m["poster_path"]).ToString();
+                        movie.overview = (m["overview"]).ToString();
                         MoodMovies.Add(movie);
 
                     }
@@ -308,6 +306,7 @@ namespace MovieMatch.Controllers
 
 
         }
+
 
         public int FindMoodMethod(string g)
         {

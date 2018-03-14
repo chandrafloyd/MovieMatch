@@ -16,6 +16,7 @@
     </tr>
     @for (int i = 0; i < ViewBag.RawResults.Count - 1; i++)
     {
+
     <tr>
         <td><img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" /></td>
         <td>@ViewBag.RawResults[i]["original_title"]</td>
@@ -25,10 +26,11 @@
         <td>@ViewBag.RuntimeResults[i]</td>
         <td>@ViewBag.RawResults[i]["vote_average"]</td>
         <td>
-            @{var LinktoAmazon = ViewBag.AmazonLinks[i];}
-            <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Amazon_URL=@LinktoAmazon&Id=@User.Identity.GetUserId()" onclick="return ConfirmAddToList()">Add to My List</a>
+            
+            <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Amazon_URL=@ViewBag.AmazonLinks[i]&Id=@User.Identity.GetUserId()" onclick="return ConfirmAddToList()">Add to My List</a>
         </td>
     </tr>
+
     }
 </table>
 
