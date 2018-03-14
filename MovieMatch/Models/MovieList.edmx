@@ -10,7 +10,7 @@
             <PropertyRef Name="title" />
           </Key>
           <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="with_genres" Type="nvarchar" MaxLength="50" />
+          <Property Name="with_genres" Type="nvarchar" MaxLength="200" />
           <Property Name="with_keywords" Type="nvarchar" MaxLength="50" />
           <Property Name="with_people" Type="nvarchar" MaxLength="50" />
           <Property Name="primary_release_year" Type="nvarchar" MaxLength="20" />
@@ -22,7 +22,8 @@
           <Property Name="overview" Type="nvarchar" MaxLength="1000" />
           <Property Name="rating" Type="int" />
           <Property Name="mmrating" Type="decimal" Precision="3" Scale="1" />
-          <Property Name="imdb_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="imdb_id" Type="nvarchar" MaxLength="200" />
+          <Property Name="Amazon_URL" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
@@ -41,7 +42,7 @@
           </Key>
           <Property Name="searchnumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
-          <Property Name="with_genres" Type="nvarchar" MaxLength="50" />
+          <Property Name="with_genres" Type="nvarchar" MaxLength="200" />
           <Property Name="primary_release_year" Type="int" />
           <Property Name="runtime" Type="int" />
           <Property Name="language" Type="nvarchar" MaxLength="50" />
@@ -57,8 +58,8 @@
       <Schema Namespace="moviematchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="SearchTerms" EntityType="moviematchModel.SearchTerm" />
-          <EntitySet Name="MovieLists" EntityType="moviematchModel.MovieList" />
           <EntitySet Name="MovieMoods" EntityType="moviematchModel.MovieMood" />
+          <EntitySet Name="MovieLists" EntityType="moviematchModel.MovieList" />
         </EntityContainer>
         <EntityType Name="SearchTerm">
           <Key>
@@ -66,29 +67,10 @@
           </Key>
           <Property Name="searchnumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="with_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="with_genres" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="primary_release_year" Type="Int32" />
           <Property Name="runtime" Type="Int32" />
           <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="MovieList">
-          <Key>
-            <PropertyRef Name="title" />
-          </Key>
-          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="with_people" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="primary_release_year" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="runtime" Type="Int32" />
-          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="watched" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="poster_path" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="overview" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="rating" Type="Int32" />
-          <Property Name="mmrating" Type="Decimal" Precision="3" Scale="1" />
-          <Property Name="imdb_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
@@ -100,6 +82,26 @@
           <Property Name="overview" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="poster_path" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="imdb_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MovieList">
+          <Key>
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="with_genres" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="with_keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="with_people" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="primary_release_year" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="runtime" Type="Int32" />
+          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="watched" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="poster_path" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="overview" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="Int32" />
+          <Property Name="mmrating" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="imdb_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Amazon_URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -119,9 +121,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MovieMoods">
+            <EntityTypeMapping TypeName="moviematchModel.MovieMood">
+              <MappingFragment StoreEntitySet="MovieMood">
+                <ScalarProperty Name="imdb_id" ColumnName="imdb_id" />
+                <ScalarProperty Name="poster_path" ColumnName="poster_path" />
+                <ScalarProperty Name="overview" ColumnName="overview" />
+                <ScalarProperty Name="mood" ColumnName="mood" />
+                <ScalarProperty Name="runtime" ColumnName="runtime" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MovieLists">
             <EntityTypeMapping TypeName="moviematchModel.MovieList">
               <MappingFragment StoreEntitySet="MovieList">
+                <ScalarProperty Name="Amazon_URL" ColumnName="Amazon_URL" />
                 <ScalarProperty Name="imdb_id" ColumnName="imdb_id" />
                 <ScalarProperty Name="mmrating" ColumnName="mmrating" />
                 <ScalarProperty Name="rating" ColumnName="rating" />
@@ -135,18 +150,6 @@
                 <ScalarProperty Name="with_people" ColumnName="with_people" />
                 <ScalarProperty Name="with_keywords" ColumnName="with_keywords" />
                 <ScalarProperty Name="with_genres" ColumnName="with_genres" />
-                <ScalarProperty Name="title" ColumnName="title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MovieMoods">
-            <EntityTypeMapping TypeName="moviematchModel.MovieMood">
-              <MappingFragment StoreEntitySet="MovieMood">
-                <ScalarProperty Name="imdb_id" ColumnName="imdb_id" />
-                <ScalarProperty Name="poster_path" ColumnName="poster_path" />
-                <ScalarProperty Name="overview" ColumnName="overview" />
-                <ScalarProperty Name="mood" ColumnName="mood" />
-                <ScalarProperty Name="runtime" ColumnName="runtime" />
                 <ScalarProperty Name="title" ColumnName="title" />
               </MappingFragment>
             </EntityTypeMapping>

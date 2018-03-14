@@ -9,10 +9,8 @@
 
 namespace MovieMatch.Models
 {
-
     using System;
     using System.Collections.Generic;
-
     public class MovieList
     {
         public string title { get; set; }
@@ -30,6 +28,6 @@ namespace MovieMatch.Models
         public Nullable<int> rating { get; set; }
         public Nullable<decimal> mmrating { get; set; }
         public string imdb_id { get; set; }
-
+        public string Amazon_URL { get; set; }
     }
 }

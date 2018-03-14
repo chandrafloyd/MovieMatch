@@ -25,7 +25,8 @@ namespace MovieMatch.LinkFinder
             else
             {
                 MatchCollection divMatch = Regex.Matches(file, @"(info table-cell)[\d\D]*(aiv)""");
-                MatchCollection Link = Regex.Matches(divMatch[0].Value, @"(href=)[\d\D]*(aiv)""");
+                //MatchCollection Link = Regex.Matches(divMatch[0].Value, @"(href=)[\d\D]*(aiv)""");
+                MatchCollection Link = Regex.Matches(divMatch[0].Value, @"(of)[\d\D]*(aiv)""");
                 return  Link[0].Value;
             }
 
