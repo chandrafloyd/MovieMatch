@@ -2,22 +2,37 @@
 
 <table class="table">
 
-	<tr>
-		<th>Title</th>
-		<th></th>		
-		<th>Add to My List</th>
-	</tr>
+    <tr>
+        <th>Title</th>
+        <th></th>
+        <th>Add to My List</th>
+    </tr>
 
 
-	@foreach (var r in ViewBag.RawResults)
-	{
-		{
-			<tr>
-				<td>@r["original_title"]</td>
-				<td><img src="https://image.tmdb.org/t/p/w500/@r["poster_path"]" height="165" width="110" /></td>
-				
-				<td><a href="/Home/FindMood?title=@r["original_title"]&with_genres=@r["genre_ids"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&Id=@User.Identity.GetUserId()">Find Mood</a></td>
-			</tr>}
-	}
+    @foreach (var r in ViewBag.RawResults)
+    {
+        {
+            <tr>
+                <td>@r["original_title"]</td>
+                <td><img src="https://image.tmdb.org/t/p/w500/@r["poster_path"]" height="165" width="110" /></td>
+
+                <td><a href="/Home/FindMood?title=@r["original_title"]&with_genres=@r["genre_ids"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&Id=@User.Identity.GetUserId()" onclick="ConfirmAddToList()">Find Mood</a></td>
+            </tr>}
+    }
 </table>
 
+
+<script>
+    function ConfirmAddToList() {
+        var ConfirmAdd;
+        if (confirm("The movie was added to your list."))
+        {
+            txt = "";
+        }
+        else confirm("Movie not added")
+        {
+            txt = " ";
+
+        }
+    }
+</script>

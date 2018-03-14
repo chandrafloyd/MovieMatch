@@ -3,7 +3,7 @@
 
 
 <br />
-<form action="/Azure/SearchListByTitle" method="get">
+<form action="/Azure/SearchListByTitle" method="get" style="float:left">
     <input type="search" placeholder="Search by Title" name="title" />
     <input type="submit" value="Search" />
 </form>
@@ -11,11 +11,9 @@
 
 
 @*same table as on /TMBD/SearchMovies.cshtml view*@
-
-<form action="/Azure/FilterByGenre/" method="get" class="form-inline">
-    <div class="form-inline">
-      
-        <select name="with_genres" >
+<div class="form-inline">
+    <form action="/Azure/FilterByGenre/" method="get" class="form-inline" style="float:left; padding-left:2em">
+        <select name="with_genres">
             <option value="">Filter by Genre</option>
             <option value="28">Action</option>
             <option value="12">Adventure</option>
@@ -37,12 +35,19 @@
             <option value="10752">War</option>
             <option value="37">Western</option>
         </select>
-        <input type="submit" />
-    </div>
-</form>
+        <input type="submit" value="Search" />
 
-<a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">Clear Search</a><br /><br />
+    </form>
+</div>
 
+<br />
+
+<div style="float:left">
+    <p>
+        <a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">Clear Search</a><br /><br />
+    </p>
+
+</div>
 
 
 <table class="table">
@@ -50,8 +55,8 @@
         <th></th>
         <th>Title</th>
         <th>Genre</th>
-        <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>
         <th><a href="/Azure/SortMovieListByYear">Year</a></th>
+        <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>
         <th><a href="/Azure/SortMovieListByUserRating">My Rating</a></th>
         <th><a href="/Azure/SortMovieListByAPIRating">MM Rating</a></th>
         <th>Find this Movie</th>
@@ -62,12 +67,13 @@
 
     @foreach (var m in ViewBag.MovieList)
     {
+
         <tr>
             <td><img src="https://image.tmdb.org/t/p/w500/@m.poster_path" height="165" width="110" /></td>
             <td>@m.title</td>
             <td>@m.with_genres</td>
-            <td>@m.runtime</td>
             <td>@m.primary_release_year</td>
+            <td>@m.runtime</td>
             <td>@m.rating</td>
             <td>@m.mmrating</td>
             <td>

@@ -5,29 +5,44 @@
 @model MovieMatch.Models.MovieList
 <table class="table">
     <tr>
-        <th>Title</th>
         <th></th>
-        <th>Released</th>
+        <th>Title</th>
+        <th>Year</th>
         <th>Plot</th>
-        <th>Genres</th>
+        <th>Genre</th>
         <th>Runtime</th>
         <th>MM Rating</th>
         <th>Add to My List</th>
     </tr>
     @for (int i = 0; i < ViewBag.RawResults.Count - 1; i++)
     {
-        <tr>
-            <td>@ViewBag.RawResults[i]["original_title"]</td>
-            <td><img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" /></td>
-            <td>@ViewBag.RawResults[i]["release_date"]</td>
-            <td>@ViewBag.RawResults[i]["overview"]</td>
-            <td>@ViewBag.GenreResults[i]</td>
-            <td>@ViewBag.RuntimeResults[i]</td>
-            <td>@ViewBag.RawResults[i]["vote_average"]</td>
-            <td>
-                @{var LinktoAmazon = ViewBag.AmazonLinks[i];}
-                <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Amazon_URL=@LinktoAmazon&Id=@User.Identity.GetUserId()">Add to My List</a>
-            </td>
-        </tr>
+    <tr>
+        <td><img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" /></td>
+        <td>@ViewBag.RawResults[i]["original_title"]</td>
+        <td>@ViewBag.RawResults[i]["release_date"]</td>
+        <td>@ViewBag.RawResults[i]["overview"]</td>
+        <td>@ViewBag.GenreResults[i]</td>
+        <td>@ViewBag.RuntimeResults[i]</td>
+        <td>@ViewBag.RawResults[i]["vote_average"]</td>
+        <td>
+            @{var LinktoAmazon = ViewBag.AmazonLinks[i];}
+            <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Amazon_URL=@LinktoAmazon&Id=@User.Identity.GetUserId()" onclick="return ConfirmAddToList()">Add to My List</a>
+        </td>
+    </tr>
     }
 </table>
+
+<script>
+    function ConfirmAddToList() {
+        var ConfirmAdd;
+        if (confirm("The movie was added to your list."))
+        {
+            txt = "";
+        }
+        else confirm("Movie not added")
+        {
+            txt = " ";
+
+        }
+    }
+</script>

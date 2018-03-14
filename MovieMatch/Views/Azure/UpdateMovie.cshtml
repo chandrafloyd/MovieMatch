@@ -1,46 +1,56 @@
 ﻿@using Microsoft.AspNet.Identity
 @model MovieMatch.Models.MovieList
-<br />
-<h2>@ViewBag.MovieToUpdate.title</h2>
-<img src="https://image.tmdb.org/t/p/w500/@ViewBag.MovieToUpdate.poster_path" height="330" width="220" />
 <br /><br />
-<form action="/Azure/SaveMovieUpdate" method="post">
-    Rating:  
-    <select name="rating">
-        <option value="" selected disabled>Rating</option>
-        <option value="1">1 </option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-    </select>
-    <br /><br />
+      <div>
+          <div style="float:left ">
+              <img src="https://image.tmdb.org/t/p/w500/@ViewBag.MovieToUpdate.poster_path"  style="padding-right:1em" height="330" width="220"  />
+          </div>
 
-    Mark As Watched:  
-    <select name="watched">
-        <option value="" selected disabled>Choose</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select>
-    <br /><br />
+          <div>
+              <br /><br />
+                    <form action="/Azure/SaveMovieUpdate" method="post">
+                        <label>Rating:</label>
+                        <select name="rating">
+                            <option value="Not Rated" selected disabled >Rating</option>
+                            <option value="1">1 </option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <br /><br />
 
-    <input type="hidden" name="title" value="@ViewBag.MovieToUpdate.title" />
-    <input type="hidden" name="with_genres" value="@ViewBag.MovieToUpdate.with_genres" />
-    <input type="hidden" name="with_keywords" value="@ViewBag.MovieToUpdate.with_keywords" />
-    <input type="hidden" name="with_people" value="@ViewBag.MovieToUpdate.with_people" />
-    <input type="hidden" name="primary_release_year" value="@ViewBag.MovieToUpdate.primary_release_year" />
-    <input type="hidden" name="runtime" value="@ViewBag.MovieToUpdate.runtime" />
-    <input type="hidden" name="language" value="@ViewBag.MovieToUpdate.language" />
-    <input type="hidden" name="watched" value="@ViewBag.MovieToUpdate.watched" />
-    <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
-    <input type="hidden" name="mmrating" value="@ViewBag.MovieToUpdate.mmrating" />
-    <input type="hidden" name="poster_path" value="@ViewBag.MovieToUpdate.poster_path" />
-    <input type="hidden" name="overview" value="@ViewBag.MovieToUpdate.overview" />
-    <input type="hidden" name="imdb_id" value="@ViewBag.MovieToUpdate.imdb_id" />
-    <input type="submit" value="Save" />
-</form>
+                        <label>Watched?</label>
+                        <select name="watched">
+                            <option value="" selected disabled>Yes/No</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                        <br /><br />
+                        <input type="submit" value="Save" />
+
+                        <input type="hidden" name="title" value="@ViewBag.MovieToUpdate.title" />
+                        <input type="hidden" name="with_genres" value="@ViewBag.MovieToUpdate.with_genres" />
+                        <input type="hidden" name="with_keywords" value="@ViewBag.MovieToUpdate.with_keywords" />
+                        <input type="hidden" name="with_people" value="@ViewBag.MovieToUpdate.with_people" />
+                        <input type="hidden" name="primary_release_year" value="@ViewBag.MovieToUpdate.primary_release_year" />
+                        <input type="hidden" name="runtime" value="@ViewBag.MovieToUpdate.runtime" />
+                        <input type="hidden" name="language" value="@ViewBag.MovieToUpdate.language" />
+                        <input type="hidden" name="watched" value="@ViewBag.MovieToUpdate.watched" />
+                        <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
+                        <input type="hidden" name="mmrating" value="@ViewBag.MovieToUpdate.mmrating" />
+                        <input type="hidden" name="poster_path" value="@ViewBag.MovieToUpdate.poster_path" />
+                        <input type="hidden" name="overview" value="@ViewBag.MovieToUpdate.overview" />
+                        <input type="hidden" name="imdb_id" value="@ViewBag.MovieToUpdate.imdb_id" />
+
+
+                    </form>
+          </div>
+      </div>
+
+
