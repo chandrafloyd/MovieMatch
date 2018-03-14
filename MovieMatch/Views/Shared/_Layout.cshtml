@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @*<meta property="og:url" content="http://localhost:61179/" />*@
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="icon" href="~/images/favicon.ico" type="image">
+    <title>@ViewBag.Title MovieMatch</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @using Microsoft.AspNet.Identity
-
 </head>
+
 <body>
 
     @*FB LIKE/SHARE BUTTON SCRIPT*@
@@ -45,7 +46,7 @@
                     <li><a href="/Azure/MovieByMood">Movie By Mood</a></li>
                     <li><a href="/Home/Recommendation?Id=@User.Identity.GetUserId()">Recommendations</a></li>
                     <li><a href="/Home/Mood?Id=@User.Identity.GetUserId()">Mood</a></li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("About Us", "About", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -53,7 +54,7 @@
     </div>
 
 
-    @* FB SOCIAL SHARE BUTTON *@
+    @* FB SOCIAL SHARES *@
     <br />
     <div class="fb-like" data-href="http://localhost:61179/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true" style="float:right"></div>
 

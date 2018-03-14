@@ -24,7 +24,7 @@
                 <td>@r["release_date"]</td>   @*want the 4 digit year not m/d/y*@
                 <td>@r["runtime"]</td>@*added here and to query string; where is data?*@
                 <td>@r["overview"]</td>
-                <td><a href="/Home/AddRecommendationToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&with_genre=@r["with_genre"]&runtime=@r["runtime"]&Id=@User.Identity.GetUserId()">Add to My List</a></td>
+                <td><a href="/Home/AddRecommendationToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&with_genre=@r["with_genre"]&runtime=@r["runtime"]&Id=@User.Identity.GetUserId()" onclick="ConfirmAddToList()">Add to My List</a></td>
             </tr>
 
         }

@@ -284,7 +284,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\3Dreel.jpg" />
     <Content Include="images\Chandra.JPG" />
+    <Content Include="images\favicon.ico" />
     <Content Include="images\film_reel.jpg" />
     <Content Include="images\IMDb_icon.png" />
     <Content Include="images\John.jpg" />
