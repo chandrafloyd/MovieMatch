@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using System.Security;
 using DataAccess;
 using libsvm;
+using System.Text;
 
 namespace MovieMatch.Controllers
 {
@@ -240,6 +241,107 @@ namespace MovieMatch.Controllers
         private static IEnumerable<string> GetWords(string x)
         {
             return x.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+
+        public ActionResult FindMovieByMood(string with_genres)
+        {
+            var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
+
+            HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
+            "&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1");
+
+
+            //browser request
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+
+
+            //request.Headers  (if needed, can request it. depends on the api documentation)
+
+            //http response
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            //if we receive a response
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                //open streamreader and read output
+                StreamReader rd = new StreamReader(response.GetResponseStream());
+                string output = rd.ReadToEnd();
+
+                //parse data and store in object
+                JObject MovieParse = JObject.Parse(output);
+
+                //locate the data we want to see. check node tree in jsonviewer
+                ViewBag.RawResults = MovieParse["results"];
+                var RawResults = MovieParse["results"];
+
+                List<MovieList> MoodMovies = new List<MovieList>();
+                foreach (var m in RawResults)
+                {
+                    var genreList = m["genre_ids"];
+
+
+                    
+                    
+                      string genreStr=string.Join(" ",genreList);
+
+                    
+                    if (FindMoodMethod(genreStr)==int.Parse(with_genres)) 
+                    {
+
+                       
+                        MovieList movie = new MovieList();
+                        movie.title = (m["original_title"]).ToString();
+                        movie.poster_path= (m["poster_path"]).ToString();
+                        movie.overview= (m["overview"]).ToString();
+                        MoodMovies.Add(movie);
+
+                    }
+                }
+                ViewBag.MovieList = MoodMovies;
+                return View();
+            }
+            else
+            {
+                return View("../Shared/Error");
+            }
+
+
+        }
+
+        public int FindMoodMethod(string g)
+        {
+            string dataFilePath = Server.MapPath("~/MoodCsv/GenreList.txt");
+
+
+            var dataTable = DataTable.New.ReadCsv(dataFilePath);
+
+            List<string> x = dataTable.Rows.Select(row => row["Genre"]).ToList();
+
+            double[] y = dataTable.Rows.Select(row => double.Parse(row["Mood"])).ToArray();
+
+            var vocabulary = x.SelectMany(GetWords).Distinct().OrderBy(word => word).ToList();
+
+            var problemBuilder = new TextClassificationProblemBuilder();
+
+            var problem = problemBuilder.CreateProblem(x, y, vocabulary.ToList());
+
+            const int C = 1;
+
+            var model = new C_SVC(problem, KernelHelper.LinearKernel(), C);
+
+            string GenreId = g;
+
+            Dictionary<int, string> _predictionDictionary = new Dictionary<int, string> { { -2, "Scared" }, { -1, "Sad" }, { 1, "Laugh" }, { 2, "Romance" } };
+
+            //maybe add do,while here
+            //GenreId = movie.with_genres;
+            var newX = TextClassificationProblemBuilder.CreateNode(GenreId, vocabulary);
+
+            var predictedY = model.Predict(newX);
+
+            // ViewBag.Mood = _predictionDictionary[-2];
+            return (int)predictedY;
         }
 
 

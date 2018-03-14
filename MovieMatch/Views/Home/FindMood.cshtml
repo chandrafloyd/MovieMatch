@@ -1,2 +1,23 @@
 ﻿
 @ViewBag.MovieTitle is @ViewBag.Mood
+
+<form action="/Home/FindMovieByMood/" method="get" class="form-inline">
+	<div class="form-inline">
+		Please select a genre:<br />
+		<select name="with_genres" required">
+
+			<option value="35">Comedy</option>
+
+			<option value="18">Drama</option>
+
+			<option value="27">Horror</option>
+
+			<option value="10749">Romance</option>
+
+		</select>
+	</div><br />
+
+	<div class="form-inline">
+		<input type="submit" value="Search" />
+	</div>
+</form>

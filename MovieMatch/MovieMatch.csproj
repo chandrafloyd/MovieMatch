@@ -403,6 +403,7 @@
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
     <Content Include="Views\Home\Mood.cshtml" />
     <Content Include="Views\Home\FindMood.cshtml" />
+    <Content Include="Views\Home\FindMovieByMood.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
