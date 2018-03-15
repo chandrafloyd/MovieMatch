@@ -1,9 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity;
-
+<h2>Recommendations for you!</h2><br />
+@model MovieMatch.Models.MovieList
 <table class="table">
-
     <tr>
-
         <th></th>
         <th>Title</th>
         <th>Genre</th>
@@ -12,19 +11,30 @@
         <th>Plot</th>
         <th>Add to My List</th>
     </tr>
-
-
-    @foreach (var r in ViewBag.RawResults)
+    @for (int i = 0; i < ViewBag.RawResults.Count - 1; i++)
     {
         {
             <tr>
-                <td><img src="https://image.tmdb.org/t/p/w500/@r["poster_path"]" height="165" width="110" /></td>
-                <td>@r["original_title"]</td>
-                <td>@r["with_genre"]</td>  @*added here and to query string; where is data?*@
-                <td>@r["release_date"]</td>   @*want the 4 digit year not m/d/y*@
-                <td>@r["runtime"]</td>@*added here and to query string; where is data?*@
-                <td>@r["overview"]</td>
-                <td><a href="/Home/AddRecommendationToMovieList?title=@r["original_title"]&overview=@r["overview"]&poster_path=@r["poster_path"]&primary_release_year=@r["release_date"]&with_genre=@r["with_genre"]&runtime=@r["runtime"]&Id=@User.Identity.GetUserId()" onclick="ConfirmAddToList()">Add to My List</a></td>
+                <td><img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" /></td>
+                <td>@ViewBag.RawResults[i]["original_title"]</td>
+                <td>@ViewBag.GenreResults[i]</td> 
+                <td>@ViewBag.trimmedYear[i]</td>   
+                <td>@ViewBag.RuntimeResults[i]</td>
+                <td>@ViewBag.RawResults[i]["overview"]</td>
+                <td>
+                    <form action="/Home/AddRecommendationToMovieList" method="post">
+                        <input type="hidden" name="poster_path" value="@ViewBag.RawResults[i]["poster_path"]" />
+                        <input type="hidden" name="title" value="@ViewBag.RawResults[i]["original_title"]" />
+                        <input type="hidden" name="primary_release_year" value="@ViewBag.trimmedYear[i]" />
+                        <input type="hidden" name="overview" value="@ViewBag.RawResults[i]["overview"]" />
+                        <input type="hidden" name="with_genres" value="@ViewBag.GenreResults[i]" />
+                        <input type="hidden" name="runtime" value="@ViewBag.RuntimeResults[i]" />
+                        <input type=hidden name="mmrating" value="@ViewBag.RawResults[i]["vote_average"]" />
+                        <input type="hidden" name="Amazon_URL" value="@ViewBag.AmazonLinks[i]" />
+                        <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
+                        <input type="submit" value="Add" onclick="return ConfirmAddToList()" />
+                    </form>
+                </td>
             </tr>
 
         }
@@ -35,8 +45,7 @@
 <script>
     function ConfirmAddToList() {
         var ConfirmAdd;
-        if (confirm("The movie was added to your list."))
-        {
+        if (confirm("The movie was added to your list.")) {
             txt = "";
         }
         else confirm("Movie not added")
