@@ -327,6 +327,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\MovieMatchGC - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\index.d.ts" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -401,7 +402,6 @@
     <Content Include="Views\TMDB\SearchResults.cshtml" />
     <Content Include="Views\Azure\GetMoviesByUser.cshtml" />
     <Content Include="Views\gitignore" />
-    <Content Include="Views\Azure\MovieByMood.cshtml" />
     <Content Include="Views\Azure\UpdateMovie.cshtml" />
     <Content Include="Views\Home\Recommendation.cshtml" />
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
