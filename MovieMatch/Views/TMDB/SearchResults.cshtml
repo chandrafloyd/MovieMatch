@@ -3,6 +3,37 @@
 <h1>Search Results</h1>
 
 @model MovieMatch.Models.MovieList
+@*<table class="table">
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Plot</th>
+            <th>Genre</th>
+            <th>Runtime</th>
+            <th>MM Rating</th>
+            <th>Add to My List</th>
+        </tr>
+        @for (int i = 0; i < ViewBag.RawResults.Count - 1; i++)
+        {
+
+        <tr>
+            <td><img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" /></td>
+            <td>@ViewBag.RawResults[i]["original_title"]</td>
+            <td>@ViewBag.RawResults[i]["release_date"]</td>
+            <td>@ViewBag.RawResults[i]["overview"]</td>
+            <td>@ViewBag.GenreResults[i]</td>
+            <td>@ViewBag.RuntimeResults[i]</td>
+            <td>@ViewBag.RawResults[i]["vote_average"]
+                <form id="LinkToAmazon" action=method="post"><input type="hidden" name="Amazon_URL" value="@ViewBag.AmazonLinks[i]" /></form>
+            </td>
+            <td>
+                <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Amazon_URL=@ViewBag.AmazonLinks[i]&Id=@User.Identity.GetUserId()"
+                   onclick="return ConfirmAddToList()">Add to My List</a>
+            </td>
+        </tr>
+        }
+    </table>*@
 <table class="table">
     <tr>
         <th></th>
@@ -17,28 +48,50 @@
     @for (int i = 0; i < ViewBag.RawResults.Count - 1; i++)
     {
 
-    <tr>
-        <td><img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" /></td>
-        <td>@ViewBag.RawResults[i]["original_title"]</td>
-        <td>@ViewBag.RawResults[i]["release_date"]</td>
-        <td>@ViewBag.RawResults[i]["overview"]</td>
-        <td>@ViewBag.GenreResults[i]</td>
-        <td>@ViewBag.RuntimeResults[i]</td>
-        <td>@ViewBag.RawResults[i]["vote_average"]</td>
-        <td>
-            
-            <a href="/Azure/AddToMovieList?title=@ViewBag.RawResults[i]["original_title"]&overview=@ViewBag.RawResults[i]["overview"]&poster_path=@ViewBag.RawResults[i]["poster_path"]&mmrating=@ViewBag.RawResults[i]["vote_average"]&runtime=@ViewBag.RuntimeResults[i]&imdb_id=@ViewBag.imdb_ID_Results[i]&with_genres=@ViewBag.GenreResults[i]&primary_release_year=@ViewBag.trimmedYear[i]&Amazon_URL=@ViewBag.AmazonLinks[i]&Id=@User.Identity.GetUserId()" onclick="return ConfirmAddToList()">Add to My List</a>
-        </td>
-    </tr>
-
+        <tr>
+            <td>
+                <img src="https://image.tmdb.org/t/p/w500/@ViewBag.RawResults[i]["poster_path"]" height="165" width="110" />
+            </td>
+            <td>
+                @ViewBag.RawResults[i]["original_title"]
+            </td>
+            <td>
+                @ViewBag.RawResults[i]["release_date"]
+            </td>
+            <td>
+                @ViewBag.RawResults[i]["overview"]
+            </td>
+            <td>
+                @ViewBag.GenreResults[i]
+            </td>
+            <td>
+                @ViewBag.RuntimeResults[i]
+            </td>
+            <td>
+                @ViewBag.RawResults[i]["vote_average"]
+            </td>
+            <td>
+                <form action="/Azure/AddToMovieList" method="post">
+                    <input type="hidden" name="poster_path" value="@ViewBag.RawResults[i]["poster_path"]" />
+                    <input type="hidden" name="title" value="@ViewBag.RawResults[i]["original_title"]" />
+                    <input type="hidden" name="primary_release_year" value="@ViewBag.trimmedYear[i]" />
+                    <input type="hidden" name="overview" value="@ViewBag.RawResults[i]["overview"]" />
+                    <input type="hidden" name="with_genres" value="@ViewBag.GenreResults[i]" />
+                    <input type="hidden" name="runtime" value="@ViewBag.RuntimeResults[i]" />
+                    <input type=hidden name="mmrating" value="@ViewBag.RawResults[i]["vote_average"]" />
+                    <input type="hidden" name="Amazon_URL" value="@ViewBag.AmazonLinks[i]" />
+                    <input type="hidden" name="Id" value="@User.Identity.GetUserId()" />
+                    <input type="submit" value="Add" onclick="return ConfirmAddToList()" />
+                </form>
+            </td>
+        </tr>
     }
 </table>
 
 <script>
     function ConfirmAddToList() {
         var ConfirmAdd;
-        if (confirm("The movie was added to your list."))
-        {
+        if (confirm("The movie was added to your list.")) {
             txt = "";
         }
         else confirm("Movie not added")
