@@ -103,6 +103,7 @@ namespace MovieMatch.Controllers
         //logged in user saves movie to their movielist
         public ActionResult AddToMovieList(MovieList newMovie)
         {
+            var UserId = User.Identity.GetUserId();
             if (!ModelState.IsValid)
             {
                 return View("../Shared/Error");

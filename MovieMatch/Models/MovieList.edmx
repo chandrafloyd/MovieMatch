@@ -7,7 +7,7 @@
     <Schema Namespace="moviematchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="MovieList">
           <Key>
-            <PropertyRef Name="title" />
+            <PropertyRef Name="MovieListNumber" />
           </Key>
           <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="with_genres" Type="nvarchar" MaxLength="200" />
@@ -24,6 +24,7 @@
           <Property Name="mmrating" Type="decimal" Precision="3" Scale="1" />
           <Property Name="imdb_id" Type="nvarchar" MaxLength="200" />
           <Property Name="Amazon_URL" Type="varchar(max)" />
+          <Property Name="MovieListNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="MovieMood">
           <Key>
@@ -85,7 +86,7 @@
         </EntityType>
         <EntityType Name="MovieList">
           <Key>
-            <PropertyRef Name="title" />
+            <PropertyRef Name="MovieListNumber" />
           </Key>
           <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="with_genres" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -102,6 +103,7 @@
           <Property Name="mmrating" Type="Decimal" Precision="3" Scale="1" />
           <Property Name="imdb_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Amazon_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MovieListNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -136,6 +138,7 @@
           <EntitySetMapping Name="MovieLists">
             <EntityTypeMapping TypeName="moviematchModel.MovieList">
               <MappingFragment StoreEntitySet="MovieList">
+                <ScalarProperty Name="MovieListNumber" ColumnName="MovieListNumber" />
                 <ScalarProperty Name="Amazon_URL" ColumnName="Amazon_URL" />
                 <ScalarProperty Name="imdb_id" ColumnName="imdb_id" />
                 <ScalarProperty Name="mmrating" ColumnName="mmrating" />

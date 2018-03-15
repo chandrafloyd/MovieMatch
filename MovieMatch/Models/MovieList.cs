@@ -29,5 +29,6 @@ namespace MovieMatch.Models
         public Nullable<decimal> mmrating { get; set; }
         public string imdb_id { get; set; }
         public string Amazon_URL { get; set; }
+        public int MovieListNumber { get; set; }
     }
 }
