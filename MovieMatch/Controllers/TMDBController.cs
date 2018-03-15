@@ -148,11 +148,33 @@ namespace MovieMatch.Controllers
                 //
                 foreach (string result in imdb_ID_Results)
                 {
-                    WebClient W = new WebClient();
-                    
-                    string imdbURL = W.DownloadString("http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1");
-                    string AmazonLink = LinkFinder.LinkFinder.SearchLinks(imdbURL);
-                    AmazonLinkList.Add(AmazonLink);
+                    string ImdbHome = "http://www.imdb.com/";
+
+                    //add IMDB home page to list if the IMDB Id is not found
+                    if(result == "")
+                    {
+                        AmazonLinkList.Add(ImdbHome);
+                    }
+                    //if IMDB Id is listed, get URL from HTML that will direct user to the movies on Amazon
+                    else
+                    {
+                        WebClient W = new WebClient();
+
+                        string imdbURL = W.DownloadString("http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1");
+                        string LinkResult = LinkFinder.LinkFinder.SearchLinks(imdbURL);
+                        string AmazonLink = "https://www.imdb.com/" + LinkResult;
+
+                        //add IMDB link to the list if the Amazon link returns not found
+                        if (LinkResult == "notfound")
+                        {
+                            string ImdbMoviePage = "http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1";
+                            AmazonLinkList.Add(ImdbMoviePage);
+                        }
+                        else
+                        {
+                            AmazonLinkList.Add(AmazonLink);
+                        }
+                    } 
                 }
 
                 ViewBag.GenreResults = DisplayGenreNames;

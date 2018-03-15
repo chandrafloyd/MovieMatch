@@ -13,39 +13,22 @@ namespace MovieMatch.LinkFinder
 
         public static string SearchLinks(string file)
         {
-            //List<LinkItem> AmazonLinkList = new List<LinkItem>();
-            //string Link = "";
-            string Place = "hi";
-            // 1.
-            // Find all matches in file.
+            string Place = "notfound";
+            
+            //finds matching text in imdb page where Amazon link is located
+
+            //if the link does not exist, return "notfound" -- use this in if/else in GetMoviesBySearch
             if (!Regex.IsMatch(file, @"(info table-cell)[\d\D]*(aiv)"""))
             {
                 return Place;
             }
             else
             {
+                //if there is amatch, grb the text within the Href tag
                 MatchCollection divMatch = Regex.Matches(file, @"(info table-cell)[\d\D]*(aiv)""");
-                //MatchCollection Link = Regex.Matches(divMatch[0].Value, @"(href=)[\d\D]*(aiv)""");
                 MatchCollection Link = Regex.Matches(divMatch[0].Value, @"(of)[\d\D]*(aiv)""");
                 return  Link[0].Value;
             }
-
-            //find the div that contains "info table-cell"
-
-            
-
-
-            //loop through each div match (should be just 1)
-            
-            //foreach (Match d in divMatch)
-            //{
-            //    //Find all anchor tag matches within div
-
-            //    Link = Regex.Matches(divMatch.ToString(), @"(href=)[\d\D]*(aiv)""").ToString();
-
-
-            //}
-            //return Link[0].Value;
         }
     }
 }
