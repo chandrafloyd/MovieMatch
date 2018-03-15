@@ -1,59 +1,60 @@
 ﻿@using Microsoft.AspNet.Identity;
-<h2>Please select your search critera:</h2>
+<body style="background-color: cornflowerblue;">
+    <div class="jumbotron" style="width: 350px;justify-content:center; align-items: center;">
+        <h2>Please select your search critera:</h2><br />
 
+        @*same table as on /Azure/GetMoviesByUser.cshtml view*@
+        @model MovieMatch.Models.SearchTerm
+        <form action="/StoredSearch/SaveSearchResult/" method="get" class="form-inline">
+            <div class="form-inline">
 
-@*same table as on /Azure/GetMoviesByUser.cshtml view*@
-@model MovieMatch.Models.SearchTerm
-<form action="/StoredSearch/SaveSearchResult/" method="get" class="form-inline">
-    <div class="form-inline">
-       
-        <select name="with_genres" required>
-            <option value="" disabled selected>Genre</option>
-            <option value="28">Action</option>
-            <option value="12">Adventure</option>
-            <option value="16">Animation</option>
-            <option value="35">Comedy</option>
-            <option value="80">Crime</option>
-            <option value="99">Documentary</option>
-            <option value="18">Drama</option>
-            <option value="10751">Family</option>
-            <option value="14">Fantasy</option>
-            <option value="36">History</option>
-            <option value="27">Horror</option>
-            <option value="10402">Music</option>
-            <option value="9648">Mystery</option>
-            <option value="10749">Romance</option>
-            <option value="878">Science Fiction</option>
-            <option value="10770">TV Movie</option>
-            <option value="53">Thriller</option>
-            <option value="10752">War</option>
-            <option value="37">Western</option>
-        </select>
+                <select name="with_genres" required>
+                    <option value="" disabled selected>Genre</option>
+                    <option value="28">Action</option>
+                    <option value="12">Adventure</option>
+                    <option value="16">Animation</option>
+                    <option value="35">Comedy</option>
+                    <option value="80">Crime</option>
+                    <option value="99">Documentary</option>
+                    <option value="18">Drama</option>
+                    <option value="10751">Family</option>
+                    <option value="14">Fantasy</option>
+                    <option value="36">History</option>
+                    <option value="27">Horror</option>
+                    <option value="10402">Music</option>
+                    <option value="9648">Mystery</option>
+                    <option value="10749">Romance</option>
+                    <option value="878">Science Fiction</option>
+                    <option value="10770">TV Movie</option>
+                    <option value="53">Thriller</option>
+                    <option value="10752">War</option>
+                    <option value="37">Western</option>
+                </select>
+            </div>
+
+            <br />
+
+            <div class="form-inline">
+                Desired Runtime:<br />
+                <input type="text" name="runtime" placeholder="Minutes" required oninvalid="this.setCustomValidity('Enter numbers')"
+                       oninput="setCustomValidity('') " pattern="^[\d]+$" />
+            </div>
+
+            <br />
+
+            <div class="form-inline">
+                Year Released:<br /><input type="text" name="primary_release_year" placeholder="1900-2025" required oninvalid="this.setCustomValidity('Enter year between 1900 and 2025')"
+                                           oninput="setCustomValidity('') " pattern="^(19\d{2}|20\d{2})$" />
+            </div>
+
+            <input type="hidden" name="Id" value="@User.Identity.GetUserId()" /><br />
+
+            <div class="form-inline">
+                <input type="submit" value="Search" />
+            </div>
+        </form>
     </div>
-    
-    <br />
-
-    <div class="form-inline">
-        Desired Runtime:<br />
-        <input type="text" name="runtime" placeholder="Minutes" required oninvalid="this.setCustomValidity('Enter numbers')"
-               oninput="setCustomValidity('') " pattern="^[\d]+$" />
-    </div>
-
-    <br />
-
-    <div class="form-inline">
-        Year Released:<br /><input type="text" name="primary_release_year" placeholder="1900-2025" required oninvalid="this.setCustomValidity('Enter year between 1900 and 2025')"
-                                   oninput="setCustomValidity('') " pattern="^(19\d{2}|20\d{2})$" />
-    </div>
-
-    <input type="hidden" name="Id" value="@User.Identity.GetUserId()" /><br />
-   
-    <div class="form-inline">
-        <input type="submit" value="Search" />
-    </div>
-</form>
-
-
+</body>
 
 
 

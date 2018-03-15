@@ -1,12 +1,14 @@
 ﻿
 @using Microsoft.AspNet.Identity
 
+<body style="background-color: cornflowerblue;">
+    <br />
+    <div class="jumbotron" style="text-align: center; width:650px;">
 
-<br />
-<form action="/Azure/SearchListByTitle" method="get" style="float:left">
-    <input type="search" placeholder="Search by Title" name="title" />
-    <input type="submit" value="Search" />
-</form>
+        <form action="/Azure/SearchListByTitle" method="get" style="float:left">
+            <input type="search" placeholder="Search by Title" name="title" />
+            <input type="submit" value="Search" />
+        </form>
 
 <div class="form-inline">
     <form action="/Azure/FilterByGenre/" method="get" class="form-inline" style="float:left; padding-left:2em">
@@ -32,64 +34,64 @@
             <option value="War">War</option>
             <option value="Western">Western</option>
         </select>
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search" />     
+        
+            </form>
+        </div>
 
-    </form>
-</div>
-
-<br />
-
-<div style="clear:both;">
- 
-        <a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">Clear Search</a><br /><br />
-  
-</div>
+        
+        <div style="clear:both;">
+            <a href="/Azure/GetMoviesByUser?Id=@User.Identity.GetUserId()">Clear Search</a><br /><br />
+        </div>
+    </div>
 
 
-<table class="table">
-    <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Genre</th>
-        <th><a href="/Azure/SortMovieListByYear">Year</a></th>
-        <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>
-        <th><a href="/Azure/SortMovieListByUserRating">My Rating</a></th>
-        <th><a href="/Azure/SortMovieListByAPIRating">MM Rating</a></th>
-        <th>Find this Movie</th>
-        <th>Add Rating</th>
-        <th>Delete from My List</th>
+ <div class="jumbotron" style="text-align: center;">
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th><a href="/Azure/SortMovieListByYear">Year</a></th>
+                <th><a href="/Azure/SortMovieListByRuntime">Runtime</a></th>
+                <th><a href="/Azure/SortMovieListByUserRating">My Rating</a></th>
+                <th><a href="/Azure/SortMovieListByAPIRating">MM Rating</a></th>
+                <th>Find this Movie</th>
+                <th>Add Rating</th>
+                <th>Delete from My List</th>
 
-    </tr>
+            </tr>
 
-    @foreach (var m in ViewBag.MovieList)
-    {
+            @foreach (var m in ViewBag.MovieList)
+            {
 
-        <tr>
-            <td><img src="https://image.tmdb.org/t/p/w500/@m.poster_path" height="165" width="110" /></td>
-            <td>@m.title</td>
-            <td>@m.with_genres</td>
-            <td>@m.primary_release_year</td>
-            <td>@m.runtime</td>
-            <td>@m.rating</td>
-            <td>@m.mmrating</td>
-            <td>
-                <a href="@m.Amazon_URL" target="_blank">
-                    <img src="~/images/amazon_icon.png" height="30" width="30" />
-                </a>
-            </td>
-            <td><a href="/Azure/UpdateMovie?MovieListNumber=@m.MovieListNumber">Rate</a></td>
-            <td><a href="/Azure/DeleteFromMovieList?MovieListNumber=@m.MovieListNumber" onclick="return ConfirmDelete()">Delete</a></td>
-        </tr>
-    }
-</table>
-
-<script>
-    function ConfirmDelete() {
-        var Delete = confirm("Are you sure you want to delete this movie from your list?");
-        if (Delete == true) {
-            return true;
-        } else {
-            return false;
+                <tr>
+                    <td><img src="https://image.tmdb.org/t/p/w500/@m.poster_path" height="165" width="110" /></td>
+                    <td>@m.title</td>
+                    <td>@m.with_genres</td>
+                    <td>@m.primary_release_year</td>
+                    <td>@m.runtime</td>
+                    <td>@m.rating</td>
+                    <td>@m.mmrating</td>
+                    <td>
+                        <a href="@m.Amazon_URL" target="_blank">
+                            <img src="~/images/amazon_icon.png" height="30" width="30" />
+                        </a>
+                    </td>
+                    <td><a href="/Azure/UpdateMovie?MovieListNumber=@m.MovieListNumber">Rate</a></td>
+                    <td><a href="/Azure/DeleteFromMovieList?MovieListNumber=@m.MovieListNumber" onclick="return ConfirmDelete()">Delete</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+    <script>
+        function ConfirmDelete() {
+            var Delete = confirm("Are you sure you want to delete this movie from your list?");
+            if (Delete == true) {
+                return true;
+            } else {
+                return false;
+            }
         }
-    }
-</script>
+    </script>
