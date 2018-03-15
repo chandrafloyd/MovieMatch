@@ -183,13 +183,13 @@ namespace MovieMatch.Controllers
         }
 
         //deletes movie from movie list (javascript confirmation when link to this action is clicked)
-        public ActionResult DeleteFromMovieList(string title)
+        public ActionResult DeleteFromMovieList(int MovieListNumber)
         {
             //1. ORM 
             Entities DeleteMovie = new Entities();
 
             //2. find movie by title, then delete
-            DeleteMovie.MovieLists.Remove(DeleteMovie.MovieLists.Find());
+            DeleteMovie.MovieLists.Remove(DeleteMovie.MovieLists.Find(MovieListNumber));
 
             //3. Save changes
             DeleteMovie.SaveChanges();
@@ -198,13 +198,13 @@ namespace MovieMatch.Controllers
         }
 
         //gets selected movie for user to add rating and mark as watched
-        public ActionResult UpdateMovie(string title)
+        public ActionResult UpdateMovie(int MovieListNumber)
         {
             //1. ORM 
             Entities UpdateMovie = new Entities();
 
             //2. find movie by title //where userID = Id?
-            MovieList MovieToBeUpdated = UpdateMovie.MovieLists.Find(title);
+            MovieList MovieToBeUpdated = UpdateMovie.MovieLists.Find(MovieListNumber);
 
             ViewBag.MovieToUpdate = MovieToBeUpdated;
 
@@ -224,7 +224,7 @@ namespace MovieMatch.Controllers
                 Entities Movie = new Entities();
 
                 //2. Find the Movie 
-                Movie.Entry(Movie.MovieLists.Find(updatedMovie.title)).
+                Movie.Entry(Movie.MovieLists.Find(updatedMovie.MovieListNumber)).
                     CurrentValues.SetValues(updatedMovie);
                 //3. 
                 Movie.SaveChanges();

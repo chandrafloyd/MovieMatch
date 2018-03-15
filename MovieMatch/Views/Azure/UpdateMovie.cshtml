@@ -11,7 +11,7 @@
                     <form action="/Azure/SaveMovieUpdate" method="post">
                         <label>Rating:</label>
                         <select name="rating">
-                            <option value="Not Rated" selected disabled >Rating</option>
+                            <option value="Not Rated" selected disabled>Rating</option>
                             <option value="1">1 </option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -47,7 +47,7 @@
                         <input type="hidden" name="poster_path" value="@ViewBag.MovieToUpdate.poster_path" />
                         <input type="hidden" name="overview" value="@ViewBag.MovieToUpdate.overview" />
                         <input type="hidden" name="imdb_id" value="@ViewBag.MovieToUpdate.imdb_id" />
-
+                        <input type="hidden" name="MovieListNumber" value="@ViewBag.MovieToUpdate.MovieListNumber" />
 
                     </form>
           </div>
