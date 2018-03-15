@@ -114,7 +114,7 @@ namespace MovieMatch.Controllers
                 //1. ORM
                 Entities AddMovie = new Entities();
 
-                if (!AddMovie.MovieLists.Any(x => x.title == newMovie.title))
+                if(AddMovie.MovieLists.Where(x => x.Id == UserId).Any(x => x.title != newMovie.title))
                 {
                     //2. Action: Find the title, save to MovieList
                     AddMovie.MovieLists.Add(newMovie);
@@ -189,7 +189,7 @@ namespace MovieMatch.Controllers
             Entities DeleteMovie = new Entities();
 
             //2. find movie by title, then delete
-            DeleteMovie.MovieLists.Remove(DeleteMovie.MovieLists.Find(title));
+            DeleteMovie.MovieLists.Remove(DeleteMovie.MovieLists.Find());
 
             //3. Save changes
             DeleteMovie.SaveChanges();
