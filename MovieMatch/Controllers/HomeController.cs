@@ -248,8 +248,10 @@ namespace MovieMatch.Controllers
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
+           
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1&with_genres=" + with_genres);
+
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + with_genres );
 
 
             //browser request
@@ -284,7 +286,9 @@ namespace MovieMatch.Controllers
                     string genreStr = string.Join(" ", genreList);
 
 
-                    if (FindMoodMethod(genreStr) == int.Parse(with_genres))
+                    
+                    if (FindMoodMethod(genreStr)) 
+
                     {
 
 
@@ -307,8 +311,8 @@ namespace MovieMatch.Controllers
 
         }
 
+        public bool FindMoodMethod(string g)
 
-        public int FindMoodMethod(string g)
         {
             string dataFilePath = Server.MapPath("~/MoodCsv/GenreList.txt");
 
@@ -338,9 +342,16 @@ namespace MovieMatch.Controllers
             var newX = TextClassificationProblemBuilder.CreateNode(GenreId, vocabulary);
 
             var predictedY = model.Predict(newX);
-
+            if (predictedY == -2 || predictedY == -1 || predictedY == 1 || predictedY == 2)
+            {
+                return true;
+            }
+            else return false;
             // ViewBag.Mood = _predictionDictionary[-2];
-            return (int)predictedY;
+
+           
+
+
         }
 
 
