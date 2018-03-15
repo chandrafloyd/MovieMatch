@@ -292,6 +292,7 @@
     <Content Include="images\IMDb_icon.png" />
     <Content Include="images\John.jpg" />
     <Content Include="images\Jose.jpg" />
+    <Content Include="images\library_pic.jpg" />
     <Content Include="images\placeholder.jpg" />
     <Content Include="images\zaineb.JPG" />
     <Content Include="Models\MovieList.Context.tt">
