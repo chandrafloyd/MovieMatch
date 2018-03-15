@@ -1,13 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity;
 <body style="background-color: cornflowerblue;">
-    <div class="jumbotron" style="width: 350px;justify-content:center; align-items: center;">
+    <div class="jumbotron" style="width: 350px;justify-content:center; align-items: center; float: left;">
         <h2>Please select your search critera:</h2><br />
 
-        @*same table as on /Azure/GetMoviesByUser.cshtml view*@
         @model MovieMatch.Models.SearchTerm
         <form action="/StoredSearch/SaveSearchResult/" method="get" class="form-inline">
             <div class="form-inline">
-
                 <select name="with_genres" required>
                     <option value="" disabled selected>Genre</option>
                     <option value="28">Action</option>
@@ -31,11 +29,9 @@
                     <option value="37">Western</option>
                 </select>
             </div>
-
             <br />
-
             <div class="form-inline">
-                Desired Runtime:<br />
+                Desired Runtime (maximum):<br />
                 <input type="text" name="runtime" placeholder="Minutes" required oninvalid="this.setCustomValidity('Enter numbers')"
                        oninput="setCustomValidity('') " pattern="^[\d]+$" />
             </div>
@@ -54,7 +50,21 @@
             </div>
         </form>
     </div>
+
+    <div class="jumbotron" style="width: 350px;justify-content:center; align-items: center; float: left; margin-left:65px;">
+        <form action="/Home/FindMovieByMood/" method="get" class="form-inline">
+            <div class="form-inline">
+                <h2>Or find movies by mood:</h2><br />
+                <select name="with_genres" required">
+                    <option value="35">Feel Like Smiling</option>
+                    <option value="18">Feeling Serious</option>
+                    <option value="27">Dark and Stormy</option>
+                    <option value="10749">Love is in the Air</option>
+                </select>
+            </div><br />
+            <div class="form-inline">
+                <input type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
 </body>
-
-
-

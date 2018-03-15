@@ -136,6 +136,43 @@ namespace MovieMatch.Controllers
             }
         }
 
+        //logged in user saves movie to their movielist
+        public ActionResult AddMoodToMovieList(MovieList newMovie)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return View("../Shared/Error");
+            }
+
+            try
+            {
+                var UserId = User.Identity.GetUserId();
+                //1. ORM
+                Entities AddMovie = new Entities();
+
+                if (AddMovie.MovieLists.Where(x => x.Id == UserId).Any(x => x.title != newMovie.title))
+                {
+                    //2. Action: Find the title, save to MovieList
+                    AddMovie.MovieLists.Add(newMovie);
+                    AddMovie.SaveChanges();
+
+                    //3. stay Get Movies by Search view
+                    return RedirectToAction("GetMoviesByUser", new { Id = User.Identity.GetUserId()  });
+                }
+                else
+                {
+                    //this validation is successful, however, it does not alert the user that they are attempting
+                    //to enter a duplicate on their list
+                    return RedirectToAction("GetMoviesByUser", new { Id = User.Identity.GetUserId() });
+                }
+            }
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
+        }
+
         //logged in user saves movie to their movielist, from the Movies by Mood generator
         public ActionResult MoodRecToMovieList(MovieList newMovie)
         {

@@ -21,187 +21,194 @@ namespace MovieMatch.Controllers
         [Authorize]
         public ActionResult Recommendation(string Id)
         {
-
-            Entities ORM = new Entities();
-
-            var UserId = Id;
-
-            #region GenreRec
-            var GenreList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.with_genres).ToList();
-            var maxGenre = GenreList.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
-            //what if the max is 2 genres?
-            #endregion
-
-            #region YearRec
-            var YearList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.primary_release_year).ToList();
-            var MaxYear = YearList.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
-            //what if the max is 2 years?
-            #endregion
-
-            #region RuntimeRec
-            var RuntimeList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.runtime).ToList();
-            int RuntimeAverage = (int)Math.Round((decimal)RuntimeList.Average());
-            int RuntimeHigh = RuntimeAverage + 15;
-            int RuntimeLow = RuntimeAverage - 15;
-            #endregion
-
-            var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
-
-            HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGenre + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" +
-            RuntimeHigh + "&with_runtime.gte=" + RuntimeLow);
-
-
-            //browser request
-            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-
-
-            //request.Headers  (if needed, can request it. depends on the api documentation)
-
-            //http response
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            //if we receive a response
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                //open streamreader and read output
-                StreamReader rd = new StreamReader(response.GetResponseStream());
-                string output = rd.ReadToEnd();
+                Entities ORM = new Entities();
 
-                //parse data and store in object
-                JObject MovieParse = JObject.Parse(output);
-                //locate the data we want to see
-                //all results stored in a variable so that we can close the reader, make sub calls, but still access all results from original call
-                var MovieResults = MovieParse["results"];
-                ViewBag.RawResults = MovieParse["results"];
+                var UserId = Id;
 
-                rd.Close();
+                #region GenreRec
+                var GenreList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.with_genres).ToList();
+                var maxGenre = GenreList.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+                //what if the max is 2 genres?
+                #endregion
 
-                //parse out the movie's id, this will be passed back into an api call to get the runtimes and genres for each movie id from RawResults
-                //this will be stored in a list
-                List<int> RuntimeResults = new List<int>();
-                List<string> GenreResults = new List<string>();
-                List<string> DisplayGenreNames = new List<string>();
-                List<string> imdb_ID_Results = new List<string>();
-                List<string> releaseYear = new List<string>();
-                List<string> AmazonLinkList = new List<string>();
+                #region YearRec
+                var YearList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.primary_release_year).ToList();
+                var MaxYear = YearList.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+                //what if the max is 2 years?
+                #endregion
 
-                foreach (var m in MovieResults)
+                #region RuntimeRec
+                var RuntimeList = ORM.SearchTerms.Where(x => x.Id == UserId).Select(x => x.runtime).ToList();
+                int RuntimeAverage = (int)Math.Round((decimal)RuntimeList.Average());
+                int RuntimeHigh = RuntimeAverage + 15;
+                int RuntimeLow = RuntimeAverage - 15;
+                #endregion
+
+                var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
+
+                HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
+                "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + maxGenre + "&primary_release_year=" + MaxYear + "&with_runtime.lte=" +
+                RuntimeHigh + "&with_runtime.gte=" + RuntimeLow);
+
+
+                //browser request
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+
+
+                //request.Headers  (if needed, can request it. depends on the api documentation)
+
+                //http response
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                //if we receive a response
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    var movieid = m["id"];
-                    //http request - call the API and pass in movieid
-                    HttpWebRequest requestMovieDetails = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
+                    //open streamreader and read output
+                    StreamReader rd = new StreamReader(response.GetResponseStream());
+                    string output = rd.ReadToEnd();
 
-                    //browser request
-                    requestMovieDetails.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                    //parse data and store in object
+                    JObject MovieParse = JObject.Parse(output);
+                    //locate the data we want to see
+                    //all results stored in a variable so that we can close the reader, make sub calls, but still access all results from original call
+                    var MovieResults = MovieParse["results"];
+                    ViewBag.RawResults = MovieParse["results"];
 
-                    //http response
-                    HttpWebResponse responseMovieDetails = (HttpWebResponse)requestMovieDetails.GetResponse();
+                    rd.Close();
 
-                    //if we receive a response
-                    if (responseMovieDetails.StatusCode == HttpStatusCode.OK)
+                    //parse out the movie's id, this will be passed back into an api call to get the runtimes and genres for each movie id from RawResults
+                    //this will be stored in a list
+                    List<int> RuntimeResults = new List<int>();
+                    List<string> GenreResults = new List<string>();
+                    List<string> DisplayGenreNames = new List<string>();
+                    List<string> imdb_ID_Results = new List<string>();
+                    List<string> releaseYear = new List<string>();
+                    List<string> AmazonLinkList = new List<string>();
+
+                    foreach (var m in MovieResults)
                     {
-                        //open streamreader and read output
-                        StreamReader rdMovieDetails = new StreamReader(responseMovieDetails.GetResponseStream());
-                        string outputMovieDetails = rdMovieDetails.ReadToEnd();
+                        var movieid = m["id"];
+                        //http request - call the API and pass in movieid
+                        HttpWebRequest requestMovieDetails = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
 
-                        //parse data and store in object
-                        JObject MovieDetailsParse = JObject.Parse(outputMovieDetails);
+                        //browser request
+                        requestMovieDetails.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
 
-                        //get the genres -- json returns array. get names and add to list to pass to view.
-                        var RawGenres = MovieDetailsParse["genres"];
+                        //http response
+                        HttpWebResponse responseMovieDetails = (HttpWebResponse)requestMovieDetails.GetResponse();
 
-                        GenreResults.Clear();
-                        foreach (var genreName in RawGenres)
+                        //if we receive a response
+                        if (responseMovieDetails.StatusCode == HttpStatusCode.OK)
                         {
-                            string GenreName = (string)genreName["name"];
-                            GenreResults.Add(GenreName);
-                        }
+                            //open streamreader and read output
+                            StreamReader rdMovieDetails = new StreamReader(responseMovieDetails.GetResponseStream());
+                            string outputMovieDetails = rdMovieDetails.ReadToEnd();
 
-                        //turns our array of lists into list of strings
-                        string GenreStr = string.Join(", ", GenreResults.ToArray());
-                        DisplayGenreNames.Add(GenreStr);
+                            //parse data and store in object
+                            JObject MovieDetailsParse = JObject.Parse(outputMovieDetails);
 
-                        //get the runtime
-                        //some of the movie results do not have a runtime value listed. either a null value or a string = "null"
-                        //we will store those as zero so we can exclude zeros from our recommendation runtime calculation
-                        string RawRuntime = (string)MovieDetailsParse["runtime"];
-                        int ActualRuntime = 0;
+                            //get the genres -- json returns array. get names and add to list to pass to view.
+                            var RawGenres = MovieDetailsParse["genres"];
 
-                        if (!int.TryParse(RawRuntime, out ActualRuntime))
-                        {
-                            ActualRuntime = 0;
+                            GenreResults.Clear();
+                            foreach (var genreName in RawGenres)
+                            {
+                                string GenreName = (string)genreName["name"];
+                                GenreResults.Add(GenreName);
+                            }
+
+                            //turns our array of lists into list of strings
+                            string GenreStr = string.Join(", ", GenreResults.ToArray());
+                            DisplayGenreNames.Add(GenreStr);
+
+                            //get the runtime
+                            //some of the movie results do not have a runtime value listed. either a null value or a string = "null"
+                            //we will store those as zero so we can exclude zeros from our recommendation runtime calculation
+                            string RawRuntime = (string)MovieDetailsParse["runtime"];
+                            int ActualRuntime = 0;
+
+                            if (!int.TryParse(RawRuntime, out ActualRuntime))
+                            {
+                                ActualRuntime = 0;
+                            }
+                            else
+                            {
+                                ActualRuntime = int.Parse(RawRuntime);
+                            }
+
+                            RuntimeResults.Add(ActualRuntime);
+
+                            //get imdb id for each movie
+                            var imdbID = MovieDetailsParse["imdb_id"];
+                            imdb_ID_Results.Add((string)imdbID);
+
+                            //get release year
+                            string movieYear = (string)MovieDetailsParse["release_date"];
+                            string trimmedYear = movieYear.Substring(0, 4);
+
+                            releaseYear.Add(trimmedYear);
+
+
                         }
                         else
                         {
-                            ActualRuntime = int.Parse(RawRuntime);
+                            return View("../Shared/Error");
                         }
-
-                        RuntimeResults.Add(ActualRuntime);
-
-                        //get imdb id for each movie
-                        var imdbID = MovieDetailsParse["imdb_id"];
-                        imdb_ID_Results.Add((string)imdbID);
-
-                        //get release year
-                        string movieYear = (string)MovieDetailsParse["release_date"];
-                        string trimmedYear = movieYear.Substring(0, 4);
-
-                        releaseYear.Add(trimmedYear);
-
-
                     }
-                    else
+
+                    //
+                    foreach (string result in imdb_ID_Results)
                     {
-                        return View("../Shared/Error");
-                    }
-                }
+                        string ImdbHome = "http://www.imdb.com/";
 
-                //
-                foreach (string result in imdb_ID_Results)
-                {
-                    string ImdbHome = "http://www.imdb.com/";
-
-                    //add IMDB home page to list if the IMDB Id is not found
-                    if (result == "" || result == null)
-                    {
-                        AmazonLinkList.Add(ImdbHome);
-                    }
-                    //if IMDB Id is listed, get URL from HTML that will direct user to the movies on Amazon
-                    else
-                    {
-                        WebClient W = new WebClient();
-
-                        string imdbURL = W.DownloadString("http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1");
-                        string LinkResult = LinkFinder.LinkFinder.SearchLinks(imdbURL);
-                        string AmazonLink = "https://www.imdb.com/" + LinkResult;
-
-                        //add IMDB link to the list if the Amazon link returns not found
-                        if (LinkResult == "notfound")
+                        //add IMDB home page to list if the IMDB Id is not found
+                        if (result == "" || result == null)
                         {
-                            string ImdbMoviePage = "http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1";
-                            AmazonLinkList.Add(ImdbMoviePage);
+                            AmazonLinkList.Add(ImdbHome);
                         }
+                        //if IMDB Id is listed, get URL from HTML that will direct user to the movies on Amazon
                         else
                         {
-                            AmazonLinkList.Add(AmazonLink);
+                            WebClient W = new WebClient();
+
+                            string imdbURL = W.DownloadString("http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1");
+                            string LinkResult = LinkFinder.LinkFinder.SearchLinks(imdbURL);
+                            string AmazonLink = "https://www.imdb.com/" + LinkResult;
+
+                            //add IMDB link to the list if the Amazon link returns not found
+                            if (LinkResult == "notfound")
+                            {
+                                string ImdbMoviePage = "http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1";
+                                AmazonLinkList.Add(ImdbMoviePage);
+                            }
+                            else
+                            {
+                                AmazonLinkList.Add(AmazonLink);
+                            }
                         }
                     }
+
+                    ViewBag.GenreResults = DisplayGenreNames;
+                    ViewBag.RuntimeResults = RuntimeResults;
+                    ViewBag.imdb_ID_Results = imdb_ID_Results;
+                    ViewBag.trimmedYear = releaseYear;
+                    ViewBag.AmazonLinks = AmazonLinkList;
+
+                    return View("Recommendation");
                 }
 
-                ViewBag.GenreResults = DisplayGenreNames;
-                ViewBag.RuntimeResults = RuntimeResults;
-                ViewBag.imdb_ID_Results = imdb_ID_Results;
-                ViewBag.trimmedYear = releaseYear;
-                ViewBag.AmazonLinks = AmazonLinkList;
-
-                return View("Recommendation");
+                else // if something is wrong (recieved a 404 or 500 error) go to this page and show the error
+                {
+                    return View("../Shared/Error");
+                }
             }
-
-            else // if something is wrong (recieved a 404 or 500 error) go to this page and show the error
+            catch (Exception)
             {
                 return View("../Shared/Error");
             }
+
 
         }
 
@@ -369,17 +376,16 @@ namespace MovieMatch.Controllers
         {
             var TMDBkey = ConfigurationManager.AppSettings["tmbd"];
 
+            //keeps temp data from the stored search action
+            TempData["mood"] = with_genres;
+            TempData.Keep();
 
+            //http request
             HttpWebRequest request = WebRequest.CreateHttp("https://api.themoviedb.org/3/discover/movie?api_key=" + TMDBkey +
-
-            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + with_genres);
-
+            "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + TempData["mood"]);
 
             //browser request
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-
-
-            //request.Headers  (if needed, can request it. depends on the api documentation)
 
             //http response
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -394,43 +400,140 @@ namespace MovieMatch.Controllers
                 //parse data and store in object
                 JObject MovieParse = JObject.Parse(output);
 
-                //locate the data we want to see. check node tree in jsonviewer
+                //locate the data we want to see
+                //all results stored in a variable so that we can close the reader, make sub calls, but still access all results from original call
+                var MovieResults = MovieParse["results"];
                 ViewBag.RawResults = MovieParse["results"];
-                var RawResults = MovieParse["results"];
 
-                List<MovieList> MoodMovies = new List<MovieList>();
-                foreach (var m in RawResults)
+                rd.Close();
+
+                //parse out the movie's id, this will be passed back into an api call to get the runtimes and genres for each movie id from RawResults
+                //this will be stored in a list
+                List<int> RuntimeResults = new List<int>();
+                List<string> GenreResults = new List<string>();
+                List<string> DisplayGenreNames = new List<string>();
+                List<string> imdb_ID_Results = new List<string>();
+                List<string> releaseYear = new List<string>();
+                List<string> AmazonLinkList = new List<string>();
+
+                foreach (var m in MovieResults)
                 {
-                    var genreList = m["genre_ids"];
+                    var movieid = m["id"];
+                    //http request - call the API and pass in movieid
+                    HttpWebRequest requestMovieDetails = WebRequest.CreateHttp("https://api.themoviedb.org/3/movie/" + movieid + "?api_key=" + TMDBkey + "&language=en-US");
 
+                    //browser request
+                    requestMovieDetails.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
 
-                    string genreStr = string.Join(" ", genreList);
+                    //http response
+                    HttpWebResponse responseMovieDetails = (HttpWebResponse)requestMovieDetails.GetResponse();
 
-
-
-                    if (FindMoodMethod(genreStr))
-
+                    //if we receive a response
+                    if (responseMovieDetails.StatusCode == HttpStatusCode.OK)
                     {
+                        //open streamreader and read output
+                        StreamReader rdMovieDetails = new StreamReader(responseMovieDetails.GetResponseStream());
+                        string outputMovieDetails = rdMovieDetails.ReadToEnd();
 
+                        //parse data and store in object
+                        JObject MovieDetailsParse = JObject.Parse(outputMovieDetails);
 
-                        MovieList movie = new MovieList();
-                        movie.title = (m["original_title"]).ToString();
-                        movie.poster_path = (m["poster_path"]).ToString();
-                        movie.overview = (m["overview"]).ToString();
-                        MoodMovies.Add(movie);
+                        //get the genres -- json returns array. get names and add to list to pass to view.
+                        var RawGenres = MovieDetailsParse["genres"];
+
+                        GenreResults.Clear();
+                        foreach (var genreName in RawGenres)
+                        {
+                            string GenreName = (string)genreName["name"];
+                            GenreResults.Add(GenreName);
+                        }
+
+                        //turns our array of lists into list of strings
+                        string GenreStr = string.Join(", ", GenreResults.ToArray());
+                        DisplayGenreNames.Add(GenreStr);
+
+                        //get the runtime
+                        //some of the movie results do not have a runtime value listed. either a null value or a string = "null"
+                        //we will store those as zero so we can exclude zeros from our recommendation runtime calculation
+                        string RawRuntime = (string)MovieDetailsParse["runtime"];
+                        int ActualRuntime = 0;
+
+                        if (!int.TryParse(RawRuntime, out ActualRuntime))
+                        {
+                            ActualRuntime = 0;
+                        }
+                        else
+                        {
+                            ActualRuntime = int.Parse(RawRuntime);
+                        }
+
+                        RuntimeResults.Add(ActualRuntime);
+
+                        //get imdb id for each movie
+                        var imdbID = MovieDetailsParse["imdb_id"];
+                        imdb_ID_Results.Add((string)imdbID);
+
+                        //get release year
+                        string movieYear = (string)MovieDetailsParse["release_date"];
+                        string trimmedYear = movieYear.Substring(0, 4);
+
+                        releaseYear.Add(trimmedYear);
+
 
                     }
+                    else
+                    {
+                        return View("../Shared/Error");
+                    }
                 }
-                ViewBag.MovieList = MoodMovies;
-                return View();
+
+                //
+                foreach (string result in imdb_ID_Results)
+                {
+                    string ImdbHome = "http://www.imdb.com/";
+
+                    //add IMDB home page to list if the IMDB Id is not found
+                    if (result == "" || result == null)
+                    {
+                        AmazonLinkList.Add(ImdbHome);
+                    }
+                    //if IMDB Id is listed, get URL from HTML that will direct user to the movies on Amazon
+                    else
+                    {
+                        WebClient W = new WebClient();
+
+                        string imdbURL = W.DownloadString("http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1");
+                        string LinkResult = LinkFinder.LinkFinder.SearchLinks(imdbURL);
+                        string AmazonLink = "https://www.imdb.com/" + LinkResult;
+
+                        //add IMDB link to the list if the Amazon link returns not found
+                        if (LinkResult == "notfound")
+                        {
+                            string ImdbMoviePage = "http://www.imdb.com/title/" + result + "/?ref_=fn_al_tt_1";
+                            AmazonLinkList.Add(ImdbMoviePage);
+                        }
+                        else
+                        {
+                            AmazonLinkList.Add(AmazonLink);
+                        }
+                    }
+                }
+
+                ViewBag.GenreResults = DisplayGenreNames;
+                ViewBag.RuntimeResults = RuntimeResults;
+                ViewBag.imdb_ID_Results = imdb_ID_Results;
+                ViewBag.trimmedYear = releaseYear;
+                ViewBag.AmazonLinks = AmazonLinkList;
+
+                return View("../TMDB/MoodResults");
             }
-            else
+
+            else // if something is wrong (recieved a 404 or 500 error) go to this page and show the error
             {
                 return View("../Shared/Error");
             }
-
-
         }
+   
 
         public bool FindMoodMethod(string g)
 

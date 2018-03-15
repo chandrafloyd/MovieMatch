@@ -293,6 +293,7 @@
     <Content Include="images\John.jpg" />
     <Content Include="images\Jose.jpg" />
     <Content Include="images\library_pic.jpg" />
+    <Content Include="images\MoviePosterReel.gif" />
     <Content Include="images\placeholder.jpg" />
     <Content Include="images\zaineb.JPG" />
     <Content Include="Models\MovieList.Context.tt">
@@ -409,6 +410,7 @@
     <Content Include="Views\Home\Mood.cshtml" />
     <Content Include="Views\Home\FindMood.cshtml" />
     <Content Include="Views\Home\FindMovieByMood.cshtml" />
+    <Content Include="Views\TMDB\MoodResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
