@@ -263,7 +263,7 @@ namespace MovieMatch.Controllers
 
             //2. Action: Sort List by ascending
 
-            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID && x.with_genres == with_genres).OrderBy(x => x.with_genres).ToList();
+            ViewBag.MovieList = MyMovieList.MovieLists.Where(x => x.Id == UserID && x.with_genres.Contains(with_genres)).OrderBy(x => x.with_genres).ToList();
 
             return View("GetMoviesByUser");
         }

@@ -151,7 +151,7 @@ namespace MovieMatch.Controllers
                     string ImdbHome = "http://www.imdb.com/";
 
                     //add IMDB home page to list if the IMDB Id is not found
-                    if(result == "")
+                    if(result == "" || result == null)
                     {
                         AmazonLinkList.Add(ImdbHome);
                     }
